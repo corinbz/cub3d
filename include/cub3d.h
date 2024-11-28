@@ -6,7 +6,7 @@
 /*   By: ccraciun <ccraciun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 09:45:41 by ccraciun          #+#    #+#             */
-/*   Updated: 2024/11/28 21:29:07 by erybolov         ###   ########.fr       */
+/*   Updated: 2024/11/28 23:05:41 by erybolov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,18 +24,18 @@
 
 typedef struct    s_player
 {
-	float x;
-	float y;
-	float angle;
-	float fov;
+	double x;
+	double y;
+	double angle;
+	double fov;
 }	t_player;
 
 typedef struct    s_cub3d
 {
 	int				map[MAP_H][MAP_W];
 	t_player		player;
-	mlx_t*			mlx;
-	mlx_image_t*	mlx_image;
+	mlx_t			*mlx;
+	mlx_image_t		*mlx_image;
 	bool			keyState[512];
 }	t_cub3d;
 
