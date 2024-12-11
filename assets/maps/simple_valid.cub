@@ -1,0 +1,14 @@
+R  1080 720
+NO ./textures/brick.xpm
+SO ./textures/blue.xpm
+WE ./textures/wood.xpm
+EA ./textures/grey.xpm
+
+F 224,172,105
+C 205,249,255
+
+111111
+100101
+101001
+1100N1
+111111

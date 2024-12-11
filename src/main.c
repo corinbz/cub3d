@@ -6,41 +6,36 @@
 /*   By: ccraciun <ccraciun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 09:54:18 by ccraciun          #+#    #+#             */
-/*   Updated: 2024/11/26 10:42:11 by ccraciun         ###   ########.fr       */
+/*   Updated: 2024/11/26 12:16:20 by ccraciun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
-static void mlx_error(void)
-{
-	puts(mlx_strerror(mlx_errno));
-	exit(EXIT_FAILURE);
-}
-
 int32_t	main(void)
 {
 	// Start mlx
-	mlx_t* mlx = mlx_init(WIDTH, HEIGHT, "Test", true);
+	mlx_t* mlx = mlx_init(WIN_WIDTH, WIN_HEIGHT, "Test", true);
 	if (!mlx)
-        error();
+        mlx_show_error();
 
 	// Try to load the file
-	mlx_texture_t* texture = mlx_load_png("assets/blue_brick.png");
+	mlx_texture_t* texture = mlx_load_png("assets/pngs/stone.png");
 	if (!texture)
 	{
 		printf("failed here\n");
-		error();
+		mlx_show_error();
 	}
 	
 	// Convert texture to a displayable image
 	mlx_image_t* img = mlx_texture_to_image(mlx, texture);
+	mlx_resize_image(img,128,128);
 	if (!img)
-        error();
+        mlx_show_error();
 
 	// Display the image
 	if (mlx_image_to_window(mlx, img, 0, 0) < 0)
-        error();
+        mlx_show_error();
 
 	mlx_loop(mlx);
 

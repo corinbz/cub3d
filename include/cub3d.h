@@ -6,7 +6,7 @@
 /*   By: ccraciun <ccraciun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 09:45:41 by ccraciun          #+#    #+#             */
-/*   Updated: 2024/11/26 10:49:48 by ccraciun         ###   ########.fr       */
+/*   Updated: 2024/11/26 12:04:36 by ccraciun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 #include <stdlib.h>
 #include "../MLX42/include/MLX42/MLX42.h"
 #include <stdio.h>
-#define WIDTH 512
-#define HEIGHT 512
+#define WIN_WIDTH 1080
+#define WIN_HEIGHT 1080
 
 //STRUCTS
 typedef struct s_textures
@@ -57,3 +57,6 @@ typedef struct s_game
 }	t_game;
 
 //FUNCTIONS
+
+//errors.c
+void mlx_error(void);
