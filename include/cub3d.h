@@ -10,12 +10,19 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../MLX42/include/MLX42/MLX42.h"
 #include <unistd.h>
 #include <stdlib.h>
-#include "../MLX42/include/MLX42/MLX42.h"
 #include <stdio.h>
+# include <fcntl.h>
+# include <stddef.h>
+
 #define WIN_WIDTH 1080
 #define WIN_HEIGHT 1080
+
+#ifndef BUFFER_SIZE
+#define BUFFER_SIZE 10
+#endif
 
 //STRUCTS
 typedef struct s_textures
@@ -60,3 +67,11 @@ typedef struct s_game
 
 //errors.c
 void mlx_error(void);
+
+//utils
+char	*get_next_line(int fd);
+void	ft_free_all(char **str1, char **str2, char **str3);
+int		contains_newline(const char *s);
+char	*join_strs(const char *s1, const char *s2);
+char	*ft_strdup(const char *str);
+void	*ft_calloc(size_t num_elements, size_t element_size);
