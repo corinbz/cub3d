@@ -28,7 +28,7 @@ with a \n character.
 
 #include "../include/cub3d.h"
 
-char	*get_before_nl(char *s)
+static char	*get_before_nl(char *s)
 {
 	char	*res;
 	size_t	i;
@@ -55,7 +55,7 @@ char	*get_before_nl(char *s)
 	return (res);
 }
 
-char	*get_after_nl(char *s)
+static char	*get_after_nl(char *s)
 {
 	char	*res;
 	size_t	i;
@@ -82,7 +82,7 @@ char	*get_after_nl(char *s)
 }
 
 // reads the text file untill it finds newline or EOF
-int	read_line(int fd, char **text, char **tmp)
+static int	read_line(int fd, char **text, char **tmp)
 {
 	int		bytes_read;
 	char	*buf;
@@ -113,7 +113,7 @@ int	read_line(int fd, char **text, char **tmp)
 
 // parses the text and returns the string before newline
 // text now contains the extra chars after newline
-char	*parse_line(char **text, char **tmp)
+static char	*parse_line(char **text, char **tmp)
 {
 	char	*chars_before_nl;
 

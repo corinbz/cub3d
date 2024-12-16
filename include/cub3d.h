@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccraciun <ccraciun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: corin <corin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 09:45:41 by ccraciun          #+#    #+#             */
-/*   Updated: 2024/11/26 12:04:36 by ccraciun         ###   ########.fr       */
+/*   Updated: 2024/12/16 11:32:42 by corin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@
 #ifndef BUFFER_SIZE
 #define BUFFER_SIZE 10
 #endif
+
+#define FILE_NO_ACCES "File could not be opened"
 
 //STRUCTS
 typedef struct s_textures
@@ -43,10 +45,16 @@ typedef struct s_imgs
 
 typedef struct s_map
 {
+	char	*north_png_path;
+	char	*south_png_path;
+	char	*west_png_path;
+	char	*east_png_path;
 	char	**cell_value;
 	size_t	width;
 	size_t	height;
 	bool	valid;
+	int		floor_color[3];
+	int		ceiling_color[3];
 }	t_map;
 
 typedef struct s_player_pos
@@ -75,3 +83,7 @@ int		contains_newline(const char *s);
 char	*join_strs(const char *s1, const char *s2);
 char	*ft_strdup(const char *str);
 void	*ft_calloc(size_t num_elements, size_t element_size);
+
+//utils_strings.c
+int	ft_strncmp(const char *s1, const char *s2, size_t n);
+void strip_whitespace(char *str);

@@ -1,46 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*   utils_memory.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: corin <corin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/19 14:39:22 by corin             #+#    #+#             */
-/*   Updated: 2024/12/16 10:46:32 by corin            ###   ########.fr       */
+/*   Created: 2024/12/16 10:44:52 by corin             #+#    #+#             */
+/*   Updated: 2024/12/16 10:45:15 by corin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
-int	contains_newline(const char *s)
+void	*ft_calloc(size_t num_elements, size_t element_size)
 {
-	int	i;
+	void			*result;
+	unsigned char	*p;
 
-	i = 0;
-	while (s[i])
+	result = malloc(num_elements * element_size);
+	if (!result)
+		return (NULL);
+	p = (unsigned char *)result;
+	while (num_elements != 0)
 	{
-		if (s[i] == '\n')
-			return (1);
-		i++;
+		*p = '\0';
+		p++;
+		num_elements--;
 	}
-	return (0);
-}
-
-void	ft_free_all(char **str1, char **str2, char **str3)
-{
-	if (str1 && *str1)
-	{
-		free(*str1);
-		*str1 = NULL;
-	}
-	if (str2 && *str2)
-	{
-		free(*str2);
-		*str2 = NULL;
-	}
-	if (str3 && *str3)
-	{
-		free(*str3);
-		*str3 = NULL;
-	}
+	return (result);
 }
