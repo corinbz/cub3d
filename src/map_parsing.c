@@ -6,7 +6,7 @@
 /*   By: corin <corin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 10:35:54 by corin             #+#    #+#             */
-/*   Updated: 2024/12/17 11:25:41 by corin            ###   ########.fr       */
+/*   Updated: 2024/12/17 12:19:30 by corin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ bool	is_valid_map_line(const char *line)
 {
 	const char	*allowed_chars;
 
-	allowed_chars = "01NSEW";
+	allowed_chars = "01NSE W\n";
 	while (*line && ft_isspace((char)*line))
 		line++;
 	if (*line == '\0')
@@ -99,6 +99,7 @@ bool	is_valid_map_line(const char *line)
 	{
 		if(!ft_strchr(allowed_chars, *line))
 		{
+			// printf("%c not valid\n",(char)*line);
 			return false;
 		}
 		line++;
@@ -110,15 +111,16 @@ void parse_map(char *line, t_map *map, int *map_ln_no)
 {
 	if (is_valid_map_line(line))
 	{
+		// printf("%s\n",line);
 		map->cell_value[*map_ln_no] = ft_strdup(line);
 		if (!map->cell_value[*map_ln_no])
 			return (perror("strdup failed"));
-		// printf("#%d--->%s\n",*map_ln_no, map->cell_value[*map_ln_no]);
+		// printf("#%d--->%s",*map_ln_no, map->cell_value[*map_ln_no]);
 		(*map_ln_no)++;
 	}
 }
 
-int read_map_file(char *path, t_map *map)
+int parse_map_file(char *path, t_map *map)
 {
 	int		fd;
 	char	*line;
@@ -134,9 +136,9 @@ int read_map_file(char *path, t_map *map)
 	map->cell_value = ft_calloc(500, sizeof(char*));
 	while (line)
 	{
+		parse_map(line, map, &map_ln_no);
 		parse_paths(line, map, &line_no);
 		parse_colors(line, map, &line_no);
-		parse_map(line, map, &map_ln_no);
 		free(line);
 		line = get_next_line(fd);
 	}

@@ -6,11 +6,12 @@
 /*   By: corin <corin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 09:45:41 by ccraciun          #+#    #+#             */
-/*   Updated: 2024/12/17 11:24:00 by corin            ###   ########.fr       */
+/*   Updated: 2024/12/17 12:58:11 by corin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../MLX42/include/MLX42/MLX42.h"
+#include <stdbool.h>
 #include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -29,18 +30,18 @@
 //STRUCTS
 typedef struct s_textures
 {
-	mlx_texture_t	*blue_brk;
-	mlx_texture_t	*grey_brk;
-	mlx_texture_t	*purple_brk;
-	mlx_texture_t	*yellow_brk;
+	mlx_texture_t	*NO;
+	mlx_texture_t	*SO;
+	mlx_texture_t	*WE;
+	mlx_texture_t	*EA;
 }	t_textures;
 
 typedef struct s_imgs
 {
-	mlx_image_t	*blue_brk;
-	mlx_image_t	*grey_brk;
-	mlx_image_t	*purple_brk;
-	mlx_image_t	*yellow_brk;
+	mlx_image_t	*NO;
+	mlx_image_t	*SO;
+	mlx_image_t	*WE;
+	mlx_image_t	*EA;
 }	t_imgs;
 
 typedef struct s_map
@@ -103,6 +104,7 @@ char	**ft_split(char const *s, char c);
 void	free_map(t_map *map);
 
 //map_parsing.c
-int parse_paths(char *line, t_map *map, int *line_no);
-int parse_colors(char *line, t_map *map, int *line_no);
-int read_map_file(char *path, t_map *map);
+int parse_map_file(char *path, t_map *map);
+
+//check_map.c
+bool	valid_walls(t_map *map);

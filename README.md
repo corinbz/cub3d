@@ -1,3 +1,10 @@
-1. creating the data structures and initializing them
-2. parsing the map (checking if it's valid)
-3. drawing the initial map, and spawn the player in the correct position
+TODO:
+
+[ ]Map lines must not be separated by newline
+[ ]Map is surrounded by walls
+
+
+
+links:
+
+https://hackmd.io/@nszl/H1LXByIE2#Map-parsing-and-validating

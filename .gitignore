@@ -1,0 +1,7 @@
+cub3d
+
+# Object files
+*.o
+*.ko
+*.obj
+*.elf
