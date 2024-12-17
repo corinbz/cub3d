@@ -6,7 +6,7 @@
 /*   By: corin <corin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 09:45:41 by ccraciun          #+#    #+#             */
-/*   Updated: 2024/12/17 10:32:39 by corin            ###   ########.fr       */
+/*   Updated: 2024/12/17 11:24:00 by corin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,9 +93,16 @@ void 	strip_whitespace(char *str);
 size_t	ft_strlen(const char *str);
 size_t	ft_strlcpy(char *dst, const char *src, size_t size);
 int		ft_atoi(const char *str);
+char	*ft_strchr(const char *s, int c);
+int		ft_isspace(char c);
 
 //split.c
 char	**ft_split(char const *s, char c);
 
 //free_structs.c
 void	free_map(t_map *map);
+
+//map_parsing.c
+int parse_paths(char *line, t_map *map, int *line_no);
+int parse_colors(char *line, t_map *map, int *line_no);
+int read_map_file(char *path, t_map *map);

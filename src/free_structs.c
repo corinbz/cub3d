@@ -6,7 +6,7 @@
 /*   By: corin <corin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 10:24:01 by corin             #+#    #+#             */
-/*   Updated: 2024/12/17 10:27:47 by corin            ###   ########.fr       */
+/*   Updated: 2024/12/17 11:27:02 by corin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,5 +18,7 @@ void free_map(t_map *map)
 	free(map->south_png_path);
 	free(map->west_png_path);
 	free(map->east_png_path);
+	ft_free_2d(map->cell_value);
+	
 	free(map);
 }

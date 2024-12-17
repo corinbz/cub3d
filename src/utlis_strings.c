@@ -6,7 +6,7 @@
 /*   By: corin <corin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 10:45:27 by corin             #+#    #+#             */
-/*   Updated: 2024/12/17 10:24:12 by corin            ###   ########.fr       */
+/*   Updated: 2024/12/17 10:50:52 by corin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,4 +154,24 @@ int	ft_atoi(const char *str)
 		index++;
 	}
 	return (result * sign);
+}
+
+char	*ft_strchr(const char *s, int c)
+{
+	char	char_c;
+	char	*char_s;
+	int		i;
+
+	i = 0;
+	char_s = (char *)s;
+	char_c = c;
+	while (char_s[i] != char_c)
+	{
+		if (char_s[i] == '\0')
+		{
+			return (NULL);
+		}
+		i++;
+	}
+	return ((char *)char_s + i);
 }
