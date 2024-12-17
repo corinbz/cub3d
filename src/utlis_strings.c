@@ -6,7 +6,7 @@
 /*   By: corin <corin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 10:45:27 by corin             #+#    #+#             */
-/*   Updated: 2024/12/16 11:32:34 by corin            ###   ########.fr       */
+/*   Updated: 2024/12/17 10:24:12 by corin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,4 +97,61 @@ void strip_whitespace(char *str)
 	}
 
 	*write_ptr = '\0';
+}
+
+size_t	ft_strlen(const char *str)
+{
+	int	len;
+
+	len = 0;
+	while (*str)
+	{
+		str++;
+		len++;
+	}
+	return (len);
+}
+
+size_t	ft_strlcpy(char *dst, const char *src, size_t size)
+{
+	size_t	i;
+	size_t	src_len;
+
+	src_len = ft_strlen(src);
+	if (size == 0)
+		return (src_len);
+	i = 0;
+	while (i < size - 1 && src[i])
+	{
+		dst[i] = src[i];
+		i++;
+	}
+	dst[i] = '\0';
+	return (src_len);
+}
+
+int	ft_atoi(const char *str)
+{
+	int	result;
+	int	sign;
+	int	index;
+
+	result = 0;
+	sign = 1;
+	index = 0;
+	while (ft_isspace(str[index]))
+		index++;
+	if (str[index] == '-')
+	{
+		sign = -1;
+		index++;
+	}
+	else if (str[index] == '+')
+		index++;
+	while (str[index] >= '0' && str[index] <= '9')
+	{
+		result = result * 10 + str[index] - '0';
+		index++;
+	}
+	return (result * sign);
 }

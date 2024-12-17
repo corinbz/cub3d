@@ -6,7 +6,7 @@
 /*   By: corin <corin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 09:45:41 by ccraciun          #+#    #+#             */
-/*   Updated: 2024/12/16 11:32:42 by corin            ###   ########.fr       */
+/*   Updated: 2024/12/17 10:32:39 by corin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,20 @@ void	ft_free_all(char **str1, char **str2, char **str3);
 int		contains_newline(const char *s);
 char	*join_strs(const char *s1, const char *s2);
 char	*ft_strdup(const char *str);
+
+//utils_memory.c
 void	*ft_calloc(size_t num_elements, size_t element_size);
+void	ft_free_2d(char **arr);
 
 //utils_strings.c
-int	ft_strncmp(const char *s1, const char *s2, size_t n);
-void strip_whitespace(char *str);
+int		ft_strncmp(const char *s1, const char *s2, size_t n);
+void 	strip_whitespace(char *str);
+size_t	ft_strlen(const char *str);
+size_t	ft_strlcpy(char *dst, const char *src, size_t size);
+int		ft_atoi(const char *str);
+
+//split.c
+char	**ft_split(char const *s, char c);
+
+//free_structs.c
+void	free_map(t_map *map);

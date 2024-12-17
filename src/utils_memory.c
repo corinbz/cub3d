@@ -6,7 +6,7 @@
 /*   By: corin <corin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 10:44:52 by corin             #+#    #+#             */
-/*   Updated: 2024/12/16 10:45:15 by corin            ###   ########.fr       */
+/*   Updated: 2024/12/17 10:32:11 by corin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,4 +28,23 @@ void	*ft_calloc(size_t num_elements, size_t element_size)
 		num_elements--;
 	}
 	return (result);
+}
+
+
+void	ft_free_2d(char **arr)
+{
+	size_t	i;
+
+	i = 0;
+	if (arr != NULL)
+	{
+		while (arr[i] != NULL)
+		{
+			free(arr[i]);
+			arr[i] = NULL;
+			i++;
+		}
+		free(arr);
+		arr = NULL;
+	}
 }
