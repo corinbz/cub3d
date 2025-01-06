@@ -6,7 +6,7 @@
 /*   By: corin <corin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 11:43:57 by corin             #+#    #+#             */
-/*   Updated: 2024/12/17 13:06:24 by corin            ###   ########.fr       */
+/*   Updated: 2025/01/06 11:19:06 by corin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,24 +23,34 @@ size_t count_rows(char **cells)
 	return (res);
 }
 
-bool valid_walls(t_map *map)
+bool check_f_or_l(char **map, int i, int j)
+{
+	while(map[i][j])
+	{
+		if(map[i][j] != '1' || map[i][j] != ' ')
+			return (false);
+		j++;
+	}
+	return (true);
+}
+
+bool valid_map(t_map *map)
 {
 	bool check;
 	int i;
 	int j;
 	size_t max_rows;
-	
-	max_rows = count_rows(map->cell_value);
+	char **map_array;
 
+	map_array = map->cell_value;
+	max_rows = count_rows(map_array);
 	i = 0;
 	j = 0;
-	while(map->cell_value[0][j])
+	while(map_array[i][j])
 	{
-		while(ft_isspace(map->cell_value[i][j]))
-			j++;
+		if ((i == 0 || i == max_rows) && check_f_or_l(map_array, i , j))
+			i++;
 		
 	}
-	
-	
 	return (true);
 }

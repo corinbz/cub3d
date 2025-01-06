@@ -6,7 +6,7 @@
 /*   By: corin <corin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 09:45:41 by ccraciun          #+#    #+#             */
-/*   Updated: 2024/12/17 12:58:11 by corin            ###   ########.fr       */
+/*   Updated: 2025/01/06 10:53:22 by corin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,4 +107,4 @@ void	free_map(t_map *map);
 int parse_map_file(char *path, t_map *map);
 
 //check_map.c
-bool	valid_walls(t_map *map);
+bool	valid_map(t_map *map);
