@@ -6,7 +6,7 @@
 /*   By: ccraciun <ccraciun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 11:43:57 by corin             #+#    #+#             */
-/*   Updated: 2025/01/07 10:29:47 by ccraciun         ###   ########.fr       */
+/*   Updated: 2025/01/07 12:26:46 by ccraciun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,59 @@ int count_rows(char **cells)
 	return (res);
 }
 
-bool check_f_or_l(char **map, int i, int j)
+bool check_f_or_l(char *row)
 {
-	while(map[i][j])
+	int	i;
+
+	i = 0;
+	while(row[i])
 	{
-		if(map[i][j] != '1' || map[i][j] != ' ')
+		if(row[i] != '1' || row[i] != ' ')
 			return (false);
-		j++;
+		i++;
+	}
+	return (true);
+}
+
+bool check_sides(char *row)
+{
+	char	first;
+	char	last;
+	int		i;
+	
+	first = '\0';
+	last = '\0';
+	i = 0;
+	printf("%s",row);
+	while(row[i])
+	{
+		if (row[i] != ' ' && !first)
+			first = row[i];
+		if ((row[i] != ' ' && row[i] != '\n') && first)
+			last = row[i];
+		i++;
+	}
+	if (first != '1' || last != '1')
+		return (dsp_err("First and last char must be 1", false));
+	return (true);
+}
+bool	check_space_neighbours(char *row)
+{
+	int		i;
+	bool	leading_space;
+	i = 0;
+	leading_space = true;
+	while(row[i])
+	{
+		if (row[i] == ' ' && !leading_space)
+		{
+			if((row[i - 1] != '1' && row[i - 1] != ' ') &&
+				row[i + 1] != '1' && row[i + 1] != ' ')
+				return (dsp_err("space has invalid neighbours", false));
+		}
+		if (row[i] != ' ')
+			leading_space = false;
+		i++;
 	}
 	return (true);
 }
@@ -41,30 +87,20 @@ bool valid_map(t_map *map)
 	int		j;
 	int		max_rows;
 	char	**map_array;
-	char	first;
-	char	last;
 
 	map_array = map->cell_value;
-	char first = '\0';
-	char last = '\0';
 	max_rows = count_rows(map_array);
 	i = 0;
 	j = 0;
 	while(i < max_rows)
 	{
-		while(map_array[i][j])
+		if ((i == 0 || i == max_rows - 1) && check_f_or_l(map_array[i]))
 		{
-			if ((i == 0 || i == max_rows - 1) && check_f_or_l(map_array, i, j))
-				break;
-			printf("%c",map_array[i][j]);
-			if (map_array[i][j] != ' ' && !first)
-				first = map_array[i][j];
-			if (map_array[i][j] != ' ' && first)
-				first = map_array[i][j];
-				
-			j++;
+			i++;
+			break;
 		}
-		j = 0;
+		if(!check_sides(map_array[i]) || !check_space_neighbours(map_array[i]))
+			return (false);
 		i++;
 	}
 	return (true);
