@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utlis_strings.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: corin <corin@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ccraciun <ccraciun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 10:45:27 by corin             #+#    #+#             */
-/*   Updated: 2024/12/17 10:50:52 by corin            ###   ########.fr       */
+/*   Updated: 2025/01/07 14:05:29 by ccraciun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ void strip_whitespace(char *str)
 	*write_ptr = '\0';
 }
 
-size_t	ft_strlen(const char *str)
+int	ft_strlen(const char *str)
 {
 	int	len;
 

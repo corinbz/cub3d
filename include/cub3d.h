@@ -6,7 +6,7 @@
 /*   By: ccraciun <ccraciun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 09:45:41 by ccraciun          #+#    #+#             */
-/*   Updated: 2025/01/07 11:57:19 by ccraciun         ###   ########.fr       */
+/*   Updated: 2025/01/07 14:05:52 by ccraciun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,8 @@ void	ft_free_2d(char **arr);
 
 //utils_strings.c
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
-void 	strip_whitespace(char *str);
-size_t	ft_strlen(const char *str);
+void	strip_whitespace(char *str);
+int		ft_strlen(const char *str);
 size_t	ft_strlcpy(char *dst, const char *src, size_t size);
 int		ft_atoi(const char *str);
 char	*ft_strchr(const char *s, int c);

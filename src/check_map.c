@@ -6,7 +6,7 @@
 /*   By: ccraciun <ccraciun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 11:43:57 by corin             #+#    #+#             */
-/*   Updated: 2025/01/07 13:19:13 by ccraciun         ###   ########.fr       */
+/*   Updated: 2025/01/07 14:05:08 by ccraciun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,26 +63,75 @@ bool check_sides(char *row)
 		return (dsp_err("First and last char must be 1", false));
 	return (true);
 }
-bool	check_space_neighbours(char *row)
+
+bool	check_addiacent_cells(char **map, int i, int j)
+{
+	if (!ft_strchr(" 1",map[i][j + 1]) || !ft_strchr(" 1",map[i][j - 1]))
+		return (false);
+	if (!ft_strchr(" 1",map[i + 1][j ]) || !ft_strchr(" 1",map[i - 1][j - 1]))
+		return (false);
+	return (true);
+}
+bool	check_space_neighbours(char **map)
 {
 	int		i;
+	int		j;
+	int	rows;
 	bool	leading_space;
 	i = 0;
 	leading_space = true;
-	while(row[i])
+	rows = count_rows(map);
+	while(map[i])
 	{
-		if (row[i] == ' ' && !leading_space)
+		while(map[i][j])
 		{
-			if((row[i - 1] != '1' && row[i - 1] != ' ') &&
-				row[i + 1] != '1' && row[i + 1] != ' ')
-				return (dsp_err("space has invalid neighbours", false));
+			if(map[i][j] != ' ')
+			{
+				leading_space = false;
+				j++;
+			}
+			if (map[i][j] == ' ' && !leading_space)
+			{
+				if ((i > 0 && j > 0) && (i < rows && j < ft_strlen(map[i])))
+					if(!check_addiacent_cells(map,i,j))
+						return (dsp_err("space has invalid neighbours", false));
+			}
+			// return (dsp_err("space has invalid neighbours", false));
+			j++;
 		}
-		if (row[i] != ' ')
-			leading_space = false;
+		leading_space = true;
+		j = 0;
 		i++;
 	}
 	return (true);
 }
+
+bool look_for_player(char **array)
+{
+	int	i;
+	int	j;
+	int	count;
+
+	i = 0;
+	j = 0;
+	count = 0;
+	while(array[i])
+	{
+		while(array[i][j])
+		{
+			// printf("%c",array[i][j]);
+			if (ft_strchr("NSWE", array[i][j]))
+				count++;
+			j++;
+		}
+		j = 0;
+		i++;
+	}
+	if (count != 1)
+		return (false);
+	return (true);
+}
+
 bool check_longer_lines(char **array, int i)
 {
 	int	curr_len;
@@ -126,6 +175,10 @@ bool valid_map(t_map *map)
 	max_rows = count_rows(map_array);
 	i = 0;
 	j = 0;
+	if(!look_for_player(map_array))
+		return(dsp_err("Player not found or too many players", false));
+	if (!check_space_neighbours(map_array))
+		return(dsp_err("space has invalid neighbours", false));
 	while(i < max_rows)
 	{
 		if (i == 0 || i == max_rows - 1)
@@ -135,9 +188,7 @@ bool valid_map(t_map *map)
 			i++;
 			continue;
 		}
-		printf("%s",map_array[i]);
 		if(!check_sides(map_array[i]) ||
-			!check_space_neighbours(map_array[i]) ||
 			!check_longer_lines(map_array, i))
 			return (false);
 		i++;
