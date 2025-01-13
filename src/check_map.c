@@ -6,7 +6,7 @@
 /*   By: ccraciun <ccraciun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 11:43:57 by corin             #+#    #+#             */
-/*   Updated: 2025/01/13 13:36:34 by ccraciun         ###   ########.fr       */
+/*   Updated: 2025/01/13 14:33:06 by ccraciun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,7 +196,7 @@ bool valid_map(t_map *map)
 		return(false);
 	while(i < max_rows)
 	{
-		printf("line %i is %s",i,map_array[i]);
+		// printf("line %i is %s",i,map_array[i]);
 		if (i == 0 || i == max_rows - 1)
 		{
 			if(!check_f_or_l(map_array[i]))

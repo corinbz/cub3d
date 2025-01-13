@@ -6,7 +6,7 @@
 /*   By: ccraciun <ccraciun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 10:35:54 by corin             #+#    #+#             */
-/*   Updated: 2025/01/13 13:44:42 by ccraciun         ###   ########.fr       */
+/*   Updated: 2025/01/13 15:15:12 by ccraciun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int parse_paths(char *line, t_map *map)
 	return (0);
 }
 
-int parse_colors(char *line, t_map *map)
+bool parse_colors(char *line, t_map *map)
 {
 	char	**color_values;
 	int		i;
@@ -61,34 +61,53 @@ int parse_colors(char *line, t_map *map)
 	strip_whitespace(line);
 	if (ft_strncmp(line, "F", 1) == 0)
 	{
-		if (map->floor_color[0])
-			return (dsp_err("Floor colors already exist", 1));
+		if (map->floor_color_filled)
+			return (dsp_err("Floor colors already exist", false));
 		color_values = ft_split(line + 1, ',');
 		if (!color_values)
 			return(perror("alloc failed\n"), 1);
 		while(color_values[i])
 		{
+			if (i > 2)
+				return (dsp_err("maximum 3 color values accepted", false));
+			// printf("floor color value %i is %s\n",i,color_values[i]);
 			map->floor_color[i] = ft_atoi(color_values[i]);
+			if (map->floor_color[i] > 255 || map->floor_color[i] < 0)
+				return (dsp_err("Color value must be between 0 and 255", false));
+			// printf("added floor color %i with value %i\n",i,map->floor_color[i]);
 			i++;
 		}
+		if (i != 3)
+			return (dsp_err("Floor: We need 3 color values", false));
+		map->floor_color_filled = true;
+		// printf("floor color filled \n");
 		ft_free_2d(color_values);
 	}
 	i = 0;
 	if (ft_strncmp(line, "C", 1) == 0)
 	{
-		if (map->ceiling_color[0])
-			return (dsp_err("Ceiling colors already exist", 1));
+		if (map->ceiling_color_filled)
+			return (dsp_err("Ceiling colors already exist", false));
 		color_values = ft_split(line + 1, ',');
 		if (!color_values)
 			return(perror("alloc failed\n"), 1);
 		while(color_values[i])
 		{
+			if (i > 2)
+				return (dsp_err("maximum 3 color values accepted", false));
 			map->ceiling_color[i] = ft_atoi(color_values[i]);
+			if (map->floor_color[i] > 255 || map->floor_color[i] < 0)
+				return (dsp_err("Color value must be between 0 and 255", false));
+			// printf("added ceiling color %i with value %i\n",i,map->ceiling_color[i]);
 			i++;
 		}
+		// printf("ceiling color filled\n");
+		if (i != 3)
+			return (dsp_err("Ceiling: We need 3 color values", false));
+		map->ceiling_color_filled = true;
 		ft_free_2d(color_values);
 	}
-	return (0);
+	return (true);
 }
 
 
@@ -144,6 +163,7 @@ int parse_map_file(char *path, t_map *map)
 	fd = open(path, O_RDONLY);
 	if (fd == -1)
 		perror(FILE_NO_ACCES);
+	// printf("%i\n",fd);
 	line = get_next_line(fd);
 	map->cell_value = ft_calloc(500, sizeof(char*));
 	while (line)
@@ -153,12 +173,16 @@ int parse_map_file(char *path, t_map *map)
 			return (free(line), 1);
 		if (parse_paths(line, map))
 			return (free(line), 1);
-		if (parse_colors(line, map))
+		if (!parse_colors(line, map))
 			return (free(line), 1);
 		free(line);
 		line = get_next_line(fd);
 	}
 	free(line);
-	// printf("%s",map->cell_value[0]);
+	if (!map->ceiling_color_filled || !map->floor_color_filled ||
+		!map->north_png_path || !map->south_png_path ||
+		!map->west_png_path || !map->east_png_path ||
+		!map->cell_value[0])
+			return (dsp_err("map file is not complete", 1));
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: ccraciun <ccraciun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 10:45:27 by corin             #+#    #+#             */
-/*   Updated: 2025/01/13 12:40:04 by ccraciun         ###   ########.fr       */
+/*   Updated: 2025/01/13 15:03:25 by ccraciun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,7 @@ int	ft_atoi(const char *str)
 	result = 0;
 	sign = 1;
 	index = 0;
-	while (ft_isspace(str[index]))
+	while (ft_isspace(str[index]) || (str[index] == '\n'))
 		index++;
 	if (str[index] == '-')
 	{
@@ -152,6 +152,11 @@ int	ft_atoi(const char *str)
 	{
 		result = result * 10 + str[index] - '0';
 		index++;
+	}
+	if (str[index] && (str[index] < '0' || str[index] > '9') && str[index] != '\n')
+	{
+		printf("ft_atoi: Invalid character \"%c\" returning -1\n",str[index]);
+		return (-1);
 	}
 	return (result * sign);
 }

@@ -6,7 +6,7 @@
 /*   By: ccraciun <ccraciun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 09:45:41 by ccraciun          #+#    #+#             */
-/*   Updated: 2025/01/07 14:05:52 by ccraciun         ###   ########.fr       */
+/*   Updated: 2025/01/13 14:08:17 by ccraciun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,11 @@ typedef struct s_map
 	char	*west_png_path;
 	char	*east_png_path;
 	char	**cell_value;
-	size_t	width;
-	size_t	height;
 	bool	valid;
 	int		floor_color[3];
+	bool	floor_color_filled;
 	int		ceiling_color[3];
+	bool	ceiling_color_filled;
 }	t_map;
 
 typedef struct s_player_pos
