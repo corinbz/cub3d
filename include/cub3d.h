@@ -6,7 +6,7 @@
 /*   By: ccraciun <ccraciun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 09:45:41 by ccraciun          #+#    #+#             */
-/*   Updated: 2025/01/13 14:08:17 by ccraciun         ###   ########.fr       */
+/*   Updated: 2025/01/13 15:33:02 by ccraciun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,3 +109,6 @@ int parse_map_file(char *path, t_map *map);
 
 //check_map.c
 bool	valid_map(t_map *map);
+
+//utils_files.c
+bool file_exists_open(const char* filename);

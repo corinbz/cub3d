@@ -6,7 +6,7 @@
 /*   By: ccraciun <ccraciun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 10:45:27 by corin             #+#    #+#             */
-/*   Updated: 2025/01/13 15:03:25 by ccraciun         ###   ########.fr       */
+/*   Updated: 2025/01/13 15:38:49 by ccraciun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,9 +90,8 @@ void strip_whitespace(char *str)
 	char *read_ptr = str;
 
 	while (*read_ptr != '\0') {
-		if (!ft_isspace((unsigned char)*read_ptr)) {
+		if (!ft_isspace((unsigned char)*read_ptr) && (unsigned char)*read_ptr != '\n')
 			*write_ptr++ = *read_ptr;
-		}
 		read_ptr++;
 	}
 
