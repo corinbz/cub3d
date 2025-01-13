@@ -6,7 +6,7 @@
 /*   By: ccraciun <ccraciun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 10:45:27 by corin             #+#    #+#             */
-/*   Updated: 2025/01/07 14:05:29 by ccraciun         ###   ########.fr       */
+/*   Updated: 2025/01/13 12:40:04 by ccraciun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 
 int ft_isspace(char c)
 {
-	if(c == ' ' || (c <= 13 && c >= 9))
+	if(c == ' ' || (c <= 13 && c >= 11) || c == 9)
 		return 1;
 	return 0;
 }

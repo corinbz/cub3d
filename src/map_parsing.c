@@ -6,7 +6,7 @@
 /*   By: ccraciun <ccraciun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 10:35:54 by corin             #+#    #+#             */
-/*   Updated: 2025/01/07 13:11:08 by ccraciun         ###   ########.fr       */
+/*   Updated: 2025/01/13 13:44:42 by ccraciun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,49 +14,55 @@
 #include <stdbool.h>
 #include <stdio.h>
 
-int parse_paths(char *line, t_map *map, int *line_no)
+int parse_paths(char *line, t_map *map)
 {
 	strip_whitespace(line);
-	if ((ft_strncmp(line, "NO", 2) == 0) && *line_no == 0)
+	if (ft_strncmp(line, "NO", 2) == 0)
 	{
+		if (map->north_png_path)
+			return(dsp_err("North path already exists", 1));
 		map->north_png_path = ft_strdup(line + 2);
 		if (!map->north_png_path)
 			return (perror("alloc failed\n"), 1);
-		(*line_no)++;
 	}
-	else if ((ft_strncmp(line, "SO", 2) == 0) && *line_no == 1)
+	else if (ft_strncmp(line, "SO", 2) == 0)
 	{
+		if (map->south_png_path)
+			return(dsp_err("South path already exists", 1));
 		map->south_png_path = ft_strdup(line + 2);
-		if (!map->north_png_path)
+		if (!map->south_png_path)
 			return (perror("alloc failed\n"), 1);
-		(*line_no)++;
 	}
-	else if ((ft_strncmp(line, "WE", 2) == 0) && *line_no == 2)
+	else if (ft_strncmp(line, "WE", 2) == 0)
 	{
+		if (map->west_png_path)
+			return(dsp_err("West path already exists", 1));
 		map->west_png_path = ft_strdup(line + 2);
-		if (!map->north_png_path)
+		if (!map->west_png_path)
 			return (perror("alloc failed\n"), 1);
-		(*line_no)++;
 	}
-	else if ((ft_strncmp(line, "EA", 2) == 0) && *line_no == 3)
+	else if (ft_strncmp(line, "EA", 2) == 0)
 	{
+		if (map->east_png_path)
+			return(dsp_err("East path already exists", 1));
 		map->east_png_path = ft_strdup(line + 2);
-		if (!map->north_png_path)
+		if (!map->east_png_path)
 			return (perror("alloc failed\n"), 1);
-		(*line_no)++;
 	}
 	return (0);
 }
 
-int parse_colors(char *line, t_map *map, int *line_no)
+int parse_colors(char *line, t_map *map)
 {
 	char	**color_values;
 	int		i;
 
 	i = 0;
 	strip_whitespace(line);
-	if ((ft_strncmp(line, "F", 1) == 0) && *line_no == 4)
+	if (ft_strncmp(line, "F", 1) == 0)
 	{
+		if (map->floor_color[0])
+			return (dsp_err("Floor colors already exist", 1));
 		color_values = ft_split(line + 1, ',');
 		if (!color_values)
 			return(perror("alloc failed\n"), 1);
@@ -65,12 +71,13 @@ int parse_colors(char *line, t_map *map, int *line_no)
 			map->floor_color[i] = ft_atoi(color_values[i]);
 			i++;
 		}
-		(*line_no)++;
 		ft_free_2d(color_values);
 	}
 	i = 0;
-	if ((ft_strncmp(line, "C", 1) == 0) && *line_no == 5)
+	if (ft_strncmp(line, "C", 1) == 0)
 	{
+		if (map->ceiling_color[0])
+			return (dsp_err("Ceiling colors already exist", 1));
 		color_values = ft_split(line + 1, ',');
 		if (!color_values)
 			return(perror("alloc failed\n"), 1);
@@ -79,7 +86,6 @@ int parse_colors(char *line, t_map *map, int *line_no)
 			map->ceiling_color[i] = ft_atoi(color_values[i]);
 			i++;
 		}
-		(*line_no)++;
 		ft_free_2d(color_values);
 	}
 	return (0);
@@ -107,17 +113,23 @@ bool	is_valid_map_line(const char *line)
 	return true;
 }
 
-void parse_map(char *line, t_map *map, int *map_ln_no)
+bool parse_map(char *line, t_map *map, int *map_ln_no)
 {
 	if (is_valid_map_line(line))
 	{
-		// printf("%s\n",line);
+		//if we have no first line of the map and line is \n just skip it
+		if(!map->cell_value[0] && !ft_strncmp(line,"\n",1))
+			return (true);
 		map->cell_value[*map_ln_no] = ft_strdup(line);
 		if (!map->cell_value[*map_ln_no])
-			return (perror("strdup failed"));
-		// printf("#%d--->%s",*map_ln_no, map->cell_value[*map_ln_no]);
+			return (perror("strdup failed"), false);
 		(*map_ln_no)++;
+		return (true);
+		// printf("#%d--->%s",*map_ln_no, map->cell_value[*map_ln_no]);
 	}
+	if(map->cell_value[0])
+		return (dsp_err("Invalid character found inside the map", false));
+	return (true);
 }
 
 int parse_map_file(char *path, t_map *map)
@@ -136,9 +148,13 @@ int parse_map_file(char *path, t_map *map)
 	map->cell_value = ft_calloc(500, sizeof(char*));
 	while (line)
 	{
-		parse_map(line, map, &map_ln_no);
-		parse_paths(line, map, &line_no);
-		parse_colors(line, map, &line_no);
+		// printf("%s",line);
+		if (!parse_map(line, map, &line_no))
+			return (free(line), 1);
+		if (parse_paths(line, map))
+			return (free(line), 1);
+		if (parse_colors(line, map))
+			return (free(line), 1);
 		free(line);
 		line = get_next_line(fd);
 	}

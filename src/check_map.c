@@ -6,7 +6,7 @@
 /*   By: ccraciun <ccraciun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 11:43:57 by corin             #+#    #+#             */
-/*   Updated: 2025/01/13 11:04:28 by ccraciun         ###   ########.fr       */
+/*   Updated: 2025/01/13 13:36:34 by ccraciun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,7 @@ bool look_for_player(char **array)
 	count = 0;
 	while(array[i])
 	{
+		// printf("%s",array[i]);
 		while(array[i][j])
 		{
 			// printf("%c",array[i][j]);
@@ -150,6 +151,10 @@ bool check_longer_lines(char **array, int i)
 	curr_len = ft_strlen(array[i]);
 	prev_len = ft_strlen(array[i - 1]);
 	nxt_len = ft_strlen(array[i + 1]);
+
+	// printf("prev_len: %i\n",prev_len);
+	// printf("curr_len: %i\n",curr_len);
+	// printf("nxt_len: %i\n\n",nxt_len);
 	
 	if (curr_len > prev_len)
 	{
@@ -162,7 +167,8 @@ bool check_longer_lines(char **array, int i)
 	}
 	if (curr_len > nxt_len)
 	{
-		while(array[i][nxt_len - 1] && array[i][prev_len - 1] != '\n')
+		// printf("%i%i%c\n",i,nxt_len - 1,array[i][nxt_len - 1]);
+		while(array[i][nxt_len - 1] != '\n' || !array[i][nxt_len - 1])
 		{
 			if(array[i][nxt_len - 1] != '1')
 				return (dsp_err("long line char must be 1", false));
@@ -190,6 +196,7 @@ bool valid_map(t_map *map)
 		return(false);
 	while(i < max_rows)
 	{
+		printf("line %i is %s",i,map_array[i]);
 		if (i == 0 || i == max_rows - 1)
 		{
 			if(!check_f_or_l(map_array[i]))
