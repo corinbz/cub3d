@@ -6,7 +6,7 @@
 /*   By: ccraciun <ccraciun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 11:43:57 by corin             #+#    #+#             */
-/*   Updated: 2025/01/07 14:05:08 by ccraciun         ###   ########.fr       */
+/*   Updated: 2025/01/13 11:04:28 by ccraciun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,12 +66,21 @@ bool check_sides(char *row)
 
 bool	check_addiacent_cells(char **map, int i, int j)
 {
-	if (!ft_strchr(" 1",map[i][j + 1]) || !ft_strchr(" 1",map[i][j - 1]))
-		return (false);
-	if (!ft_strchr(" 1",map[i + 1][j ]) || !ft_strchr(" 1",map[i - 1][j - 1]))
-		return (false);
+	if(map[i][j + 1])
+		if (!ft_strchr(" 1",map[i][j + 1]))
+			return (false);
+	if (map[i][j - 1])
+		if (!ft_strchr(" 1",map[i][j - 1]))
+			return (false);
+	if (map[i + 1])
+		if (!ft_strchr(" 1",map[i + 1][j]))
+			return (false);
+	if (map[i - 1])
+		if (!ft_strchr(" 1",map[i - 1][j]))
+			return (false);
 	return (true);
 }
+
 bool	check_space_neighbours(char **map)
 {
 	int		i;
@@ -178,7 +187,7 @@ bool valid_map(t_map *map)
 	if(!look_for_player(map_array))
 		return(dsp_err("Player not found or too many players", false));
 	if (!check_space_neighbours(map_array))
-		return(dsp_err("space has invalid neighbours", false));
+		return(false);
 	while(i < max_rows)
 	{
 		if (i == 0 || i == max_rows - 1)
