@@ -26,6 +26,12 @@
 #define MAP_H 10
 #define RAYS 200
 
+typedef struct s_texture {
+    mlx_texture_t *texture;
+    uint32_t *pixels;
+    uint32_t width;
+    uint32_t height;
+} t_texture;
 
 typedef struct    s_player
 {
@@ -42,6 +48,12 @@ typedef struct    s_game
 	mlx_t			*mlx;
 	mlx_image_t		*img;
 	bool			keyState[512];
+	t_texture		wall_texture;
+	t_texture		floor_texture;
+	t_texture		ceiling_texture;
 }	t_game;
+
+void load_textures(t_game *game);
+void cleanup_textures(t_game *game);
 
 #endif

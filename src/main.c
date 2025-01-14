@@ -29,18 +29,66 @@ double calculate_distance(double x1, double y1, double x2, double y2) {
     return sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
 }
 
-void draw_wall_slice(t_game *game, int i, double wallHeight, double sliceWidth) {
+void draw_wall_slice(t_game *game, int i, double wallHeight, double sliceWidth, double wallX) {
     int startY = (int)(SCREEN_H / 2 - wallHeight / 2);
-    if (startY < 0) startY = 0;
     int endY = (int)(SCREEN_H / 2 + wallHeight / 2);
+    
+    // Draw ceiling
+    for (int y = 0; y < startY; y++) {
+        int x = (int)(i * sliceWidth);
+        for (int k = 0; k < sliceWidth; k++) {
+            if (x + k < SCREEN_W && y < SCREEN_H) {
+                int texX = ((x + k) * game->ceiling_texture.width / SCREEN_W) % game->ceiling_texture.width;
+                int texY = (y * game->ceiling_texture.height / startY) % game->ceiling_texture.height;
+                uint32_t color = game->ceiling_texture.pixels[texY * game->ceiling_texture.width + texX];
+                // MLX42 expects RGBA format (each component 8 bits)
+                uint8_t b = (color >> 0) & 0xFF;
+                uint8_t g = (color >> 8) & 0xFF;
+                uint8_t r = (color >> 16) & 0xFF;
+                uint8_t a = (color >> 24) & 0xFF;
+                mlx_put_pixel(game->img, x + k, y, (r << 24) | (g << 16) | (b << 8) | a);
+            }
+        }
+    }
+
+    // Draw wall
+    if (startY < 0) startY = 0;
     if (endY >= SCREEN_H) endY = SCREEN_H - 1;
 
-    for (int j = startY; j <= endY; j++) {
+    for (int y = startY; y <= endY; y++) {
         int x = (int)(i * sliceWidth);
-        for (int k = 0; k < sliceWidth; k++)
-        {
-            if (x + k < SCREEN_W && j < SCREEN_H)
-                mlx_put_pixel(game->img, x + k, j, 0xB400B4FF);
+        double texY = (y - startY) / (double)(endY - startY);
+        int texX = (int)(wallX * game->wall_texture.width) % game->wall_texture.width;
+        int texYCoord = (int)(texY * game->wall_texture.height);
+        
+        uint32_t color = game->wall_texture.pixels[texYCoord * game->wall_texture.width + texX];
+        // MLX42 expects RGBA format (each component 8 bits)
+        uint8_t b = (color >> 0) & 0xFF;
+        uint8_t g = (color >> 8) & 0xFF;
+        uint8_t r = (color >> 16) & 0xFF;
+        uint8_t a = (color >> 24) & 0xFF;
+        
+        for (int k = 0; k < sliceWidth; k++) {
+            if (x + k < SCREEN_W && y < SCREEN_H)
+                mlx_put_pixel(game->img, x + k, y, (r << 24) | (g << 16) | (b << 8) | a);
+        }
+    }
+
+    // Draw floor
+    for (int y = endY + 1; y < SCREEN_H; y++) {
+        int x = (int)(i * sliceWidth);
+        for (int k = 0; k < sliceWidth; k++) {
+            if (x + k < SCREEN_W && y < SCREEN_H) {
+                int texX = ((x + k) * game->floor_texture.width / SCREEN_W) % game->floor_texture.width;
+                int texY = ((y - endY) * game->floor_texture.height / (SCREEN_H - endY)) % game->floor_texture.height;
+                uint32_t color = game->floor_texture.pixels[texY * game->floor_texture.width + texX];
+                // MLX42 expects RGBA format (each component 8 bits)
+                uint8_t b = (color >> 0) & 0xFF;
+                uint8_t g = (color >> 8) & 0xFF;
+                uint8_t r = (color >> 16) & 0xFF;
+                uint8_t a = (color >> 24) & 0xFF;
+                mlx_put_pixel(game->img, x + k, y, (r << 24) | (g << 16) | (b << 8) | a);
+            }
         }
     }
 }
@@ -66,8 +114,13 @@ void raycast(t_game *game) {
 
         double distance = calculate_distance(game->player.x, game->player.y, x, y);
         double wallHeight = SCREEN_H / distance;
+        
+        // Calculate wall X coordinate for texture mapping
+        double wallX = x - floor(x);
+        if (fabs(dy) > fabs(dx))
+            wallX = y - floor(y);
 
-        draw_wall_slice(game, i, wallHeight, sliceWidth);
+        draw_wall_slice(game, i, wallHeight, sliceWidth, wallX);
     }
 }
 
@@ -121,6 +174,54 @@ void game_loop(void *param) {
     raycast(game);
 }
 
+void load_textures(t_game *game) {
+    // Load wall texture
+    game->wall_texture.texture = mlx_load_png("textures/wall.png");
+    if (!game->wall_texture.texture) {
+        fprintf(stderr, "Error loading wall texture\n");
+        exit(EXIT_FAILURE);
+    }
+    game->wall_texture.pixels = (uint32_t*)game->wall_texture.texture->pixels;
+    game->wall_texture.width = game->wall_texture.texture->width;
+    game->wall_texture.height = game->wall_texture.texture->height;
+
+    // Load floor texture
+    game->floor_texture.texture = mlx_load_png("textures/floor.png");
+    if (!game->floor_texture.texture) {
+        mlx_delete_texture(game->wall_texture.texture);
+        fprintf(stderr, "Error loading floor texture\n");
+        exit(EXIT_FAILURE);
+    }
+    game->floor_texture.pixels = (uint32_t*)game->floor_texture.texture->pixels;
+    game->floor_texture.width = game->floor_texture.texture->width;
+    game->floor_texture.height = game->floor_texture.texture->height;
+
+    // Load ceiling texture
+    game->ceiling_texture.texture = mlx_load_png("textures/ceiling.png");
+    if (!game->ceiling_texture.texture) {
+        mlx_delete_texture(game->wall_texture.texture);
+        mlx_delete_texture(game->floor_texture.texture);
+        fprintf(stderr, "Error loading ceiling texture\n");
+        exit(EXIT_FAILURE);
+    }
+    game->ceiling_texture.pixels = (uint32_t*)game->ceiling_texture.texture->pixels;
+    game->ceiling_texture.width = game->ceiling_texture.texture->width;
+    game->ceiling_texture.height = game->ceiling_texture.texture->height;
+
+    // Debug first pixels
+    printf("First wall pixel: B:%d G:%d R:%d A:%d\n", 
+        game->wall_texture.pixels[0] & 0xFF,
+        (game->wall_texture.pixels[0] >> 8) & 0xFF,
+        (game->wall_texture.pixels[0] >> 16) & 0xFF,
+        (game->wall_texture.pixels[0] >> 24) & 0xFF);
+}
+
+void cleanup_textures(t_game *game) {
+    mlx_delete_texture(game->wall_texture.texture);
+    mlx_delete_texture(game->floor_texture.texture);
+    mlx_delete_texture(game->ceiling_texture.texture);
+}
+
 int main() {
     t_game game = {0};
 
@@ -156,10 +257,13 @@ int main() {
     };
     memcpy(game.map, map, sizeof(map));
 
+    load_textures(&game);
+
     mlx_key_hook(game.mlx, key_callback, &game);
     mlx_loop_hook(game.mlx, game_loop, &game);
     mlx_loop(game.mlx);
 
+    cleanup_textures(&game);
     mlx_delete_image(game.mlx, game.img);
     mlx_terminate(game.mlx);
 

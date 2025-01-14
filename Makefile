@@ -18,7 +18,7 @@ NC=\033[0m # No Color
 all: libmlx $(NAME)
 
 libmlx:
-	@cmake $(LIBMLX) -B $(LIBMLX)/build && make -C $(LIBMLX)/build -j4
+	@cmake -DDEBUG=1 $(LIBMLX) -B $(LIBMLX)/build && make -C $(LIBMLX)/build -j4
 
 $(OBJDIR)%.o: ./src/%.c
 	@mkdir -p $(dir $@)
