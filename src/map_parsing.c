@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_parsing.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccraciun <ccraciun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: corin <corin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 10:35:54 by corin             #+#    #+#             */
-/*   Updated: 2025/01/13 15:52:15 by ccraciun         ###   ########.fr       */
+/*   Updated: 2025/01/16 14:27:59 by corin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,10 +168,8 @@ int parse_map_file(char *path, t_map *map)
 	int		fd;
 	char	*line;
 	int		line_no;
-	int		map_ln_no;
 
 	line_no = 0;
-	map_ln_no = 0;
 	fd = open(path, O_RDONLY);
 	if (fd == -1)
 		perror(FILE_NO_ACCES);
