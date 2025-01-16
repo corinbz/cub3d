@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccraciun <ccraciun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: corin <corin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 09:45:41 by ccraciun          #+#    #+#             */
-/*   Updated: 2025/01/13 15:33:02 by ccraciun         ###   ########.fr       */
+/*   Updated: 2025/01/16 15:16:11 by corin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void mlx_error(void);
 int dsp_err(char *err, int ret);
 
 //utils
-char	*get_next_line(int fd);
+char	*get_next_line(int fd, bool clean);
 void	ft_free_all(char **str1, char **str2, char **str3);
 int		contains_newline(const char *s);
 char	*join_strs(const char *s1, const char *s2);

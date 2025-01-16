@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccraciun <ccraciun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: corin <corin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 14:35:28 by corin             #+#    #+#             */
-/*   Updated: 2023/12/12 15:08:43 by ccraciun         ###   ########.fr       */
+/*   Updated: 2025/01/16 15:15:55 by corin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,7 @@ static char	*parse_line(char **text, char **tmp)
 	return (chars_before_nl);
 }
 
-char	*get_next_line(int fd)
+char	*get_next_line(int fd, bool clean)
 {
 	static char	*text = NULL;
 	char		*tmp;
@@ -155,6 +155,8 @@ char	*get_next_line(int fd)
 			return (NULL);
 		}
 	}
+	if (clean)
+		free(text);
 	return (line);
 }
 

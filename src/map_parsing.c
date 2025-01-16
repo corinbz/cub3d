@@ -6,7 +6,7 @@
 /*   By: corin <corin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 10:35:54 by corin             #+#    #+#             */
-/*   Updated: 2025/01/16 14:27:59 by corin            ###   ########.fr       */
+/*   Updated: 2025/01/16 15:33:55 by corin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ bool parse_paths(char *line, t_map *map)
 		{
 			return(dsp_err("North path already exists", false));
 		}
-		if (!file_exists_open(line + 2))
-			return(dsp_err("Cannot open file path (textures)", false));
+		// if (!file_exists_open(line + 2))
+			// return(dsp_err("Cannot open file path (textures)", false));
 		map->north_png_path = ft_strdup(line + 2);
 		if (!map->north_png_path)
 			return (dsp_err("alloc failed\n", false));
@@ -35,8 +35,8 @@ bool parse_paths(char *line, t_map *map)
 	{
 		if (map->south_png_path)
 			return(dsp_err("South path already exists", false));
-		if (!file_exists_open(line + 2))
-			return(dsp_err("Cannot open file path (textures)", false));
+		// if (!file_exists_open(line + 2))
+			// return(dsp_err("Cannot open file path (textures)", false));
 		map->south_png_path = ft_strdup(line + 2);
 		if (!map->south_png_path)
 			return (dsp_err("alloc failed\n", false));
@@ -45,8 +45,8 @@ bool parse_paths(char *line, t_map *map)
 	{
 		if (map->west_png_path)
 			return(dsp_err("West path already exists", false));
-		if (!file_exists_open(line + 2))
-			return(dsp_err("Cannot open file path (textures)", false));
+		// if (!file_exists_open(line + 2))
+			// return(dsp_err("Cannot open file path (textures)", false));
 		map->west_png_path = ft_strdup(line + 2);
 		if (!map->west_png_path)
 			return (dsp_err("alloc failed\n", false));
@@ -55,8 +55,8 @@ bool parse_paths(char *line, t_map *map)
 	{
 		if (map->east_png_path)
 			return (dsp_err("East path already exists", false));
-		if (!file_exists_open(line + 2))
-			return (dsp_err("Cannot open file path (textures)", false));
+		// if (!file_exists_open(line + 2))
+			// return (dsp_err("Cannot open file path (textures)", false));
 		map->east_png_path = ft_strdup(line + 2);
 		if (!map->east_png_path)
 			return (dsp_err("alloc failed\n", false));
@@ -174,21 +174,28 @@ int parse_map_file(char *path, t_map *map)
 	if (fd == -1)
 		perror(FILE_NO_ACCES);
 	// printf("%i\n",fd);
-	line = get_next_line(fd);
+	line = get_next_line(fd, false);
 	map->cell_value = ft_calloc(1024, sizeof(char*));
 	while (line)
 	{
-		printf("%s",line);
+		// printf("%s",line);
 		if (!parse_map(line, map, &line_no))
+		{
+			free(line);
+			line = get_next_line(fd, true);
 			return (free(line), 1);
+		}
 		if (!parse_paths(line, map))
+		{
+			free(line);
+			line = get_next_line(fd, true);
 			return (free(line), 1);
+		}
 		if (!parse_colors(line, map))
 			return (free(line), 1);
 		free(line);
-		line = get_next_line(fd);
+		line = get_next_line(fd, false);
 	}
-	free(line);
 	if (!map->ceiling_color_filled || !map->floor_color_filled ||
 		!map->north_png_path || !map->south_png_path ||
 		!map->west_png_path || !map->east_png_path ||
