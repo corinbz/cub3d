@@ -6,7 +6,7 @@
 /*   By: corin <corin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 10:45:27 by corin             #+#    #+#             */
-/*   Updated: 2025/01/16 15:31:12 by corin            ###   ########.fr       */
+/*   Updated: 2025/01/16 17:19:52 by corin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,109 +74,30 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 	return (0);
 }
 
-int ft_isspace(char c)
+int	ft_isspace(char c)
 {
-	if(c == ' ' || (c <= 13 && c >= 11) || c == 9)
-		return 1;
-	return 0;
+	if (c == ' ' || (c <= 13 && c >= 11) || c == 9)
+		return (1);
+	return (0);
 }
 
-void strip_whitespace(char *str)
+void	strip_whitespace(char *str)
 {
+	char	*write_ptr;
+	char	*read_ptr;
+
 	if (!str)
-		return;
-
-	char *write_ptr = str;
-	char *read_ptr = str;
-
+		return ;
+	write_ptr = str;
+	read_ptr = str;
 	while (*read_ptr != '\0')
 	{
-		if (!ft_isspace((unsigned char)*read_ptr) && (unsigned char)*read_ptr != '\n')
+		if (!ft_isspace((unsigned char)*read_ptr)
+			&& (unsigned char)*read_ptr != '\n')
+		{
 			*write_ptr++ = *read_ptr;
+		}
 		read_ptr++;
 	}
-
 	*write_ptr = '\0';
-}
-
-int	ft_strlen(const char *str)
-{
-	int	len;
-
-	len = 0;
-	while (*str)
-	{
-		str++;
-		len++;
-	}
-	return (len);
-}
-
-size_t	ft_strlcpy(char *dst, const char *src, size_t size)
-{
-	size_t	i;
-	size_t	src_len;
-
-	src_len = ft_strlen(src);
-	if (size == 0)
-		return (src_len);
-	i = 0;
-	while (i < size - 1 && src[i])
-	{
-		dst[i] = src[i];
-		i++;
-	}
-	dst[i] = '\0';
-	return (src_len);
-}
-
-int	ft_atoi(const char *str)
-{
-	int	result;
-	int	sign;
-	int	index;
-
-	result = 0;
-	sign = 1;
-	index = 0;
-	while (ft_isspace(str[index]) || (str[index] == '\n'))
-		index++;
-	if (str[index] == '-')
-	{
-		sign = -1;
-		index++;
-	}
-	else if (str[index] == '+')
-		index++;
-	while (str[index] >= '0' && str[index] <= '9')
-	{
-		result = result * 10 + str[index] - '0';
-		index++;
-	}
-	if (str[index] && (str[index] < '0' || str[index] > '9') && str[index] != '\n')
-	{
-		printf("ft_atoi: Invalid character \"%c\" returning -1\n",str[index]);
-		return (-1);
-	}
-	return (result * sign);
-}
-
-char	*ft_strchr(const char *s, int c)
-{
-	char	char_c;
-	char	*char_s;
-	int		i;
-
-	i = 0;
-	char_s = (char *)s;
-	char_c = c;
-	while (char_s[i] != char_c)
-	{
-		if (char_s[i] == '\0')
-		{
-			return (NULL);
-		}
-		i++;
-	}
-	return ((char *)char_s + i);
 }

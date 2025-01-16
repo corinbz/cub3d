@@ -6,7 +6,7 @@
 /*   By: corin <corin@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 09:45:41 by ccraciun          #+#    #+#             */
-/*   Updated: 2025/01/16 15:16:11 by corin            ###   ########.fr       */
+/*   Updated: 2025/01/16 17:17:03 by corin            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
-# include <fcntl.h>
-# include <stddef.h>
+#include <fcntl.h>
+#include <stddef.h>
 
 #define WIN_WIDTH 1080
 #define WIN_HEIGHT 1080
@@ -75,8 +75,8 @@ typedef struct s_game
 //FUNCTIONS
 
 //errors.c
-void mlx_error(void);
-int dsp_err(char *err, int ret);
+void	mlx_error(void);
+bool	dsp_err(char *err);
 
 //utils
 char	*get_next_line(int fd, bool clean);
@@ -105,10 +105,25 @@ char	**ft_split(char const *s, char c);
 void	free_map(t_map *map);
 
 //map_parsing.c
-int parse_map_file(char *path, t_map *map);
+bool	parse_map_file(char *path, t_map *map);
 
-//check_map.c
+//check_map_basic.c
+int		count_rows(char **cells);
+bool	check_f_or_l(char *row);
+bool	check_sides(char *row);
 bool	valid_map(t_map *map);
 
+//check_map_space.c
+bool	check_space_neighbours(char **map);
+
+//check_map_lines.c
+bool	validate_rows(char **map_array, int max_rows);
+
 //utils_files.c
-bool file_exists_open(const char* filename);
+bool	file_exists_open(const char *filename);
+
+//parse_colors.c
+bool parse_colors(char *line, t_map *map);
+
+//parse_img_paths
+bool parse_paths(char *line, t_map *map);

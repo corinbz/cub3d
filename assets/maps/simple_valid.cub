@@ -1,10 +1,11 @@
 NO assets/maps/test1.cub
-SO assets/eagle.xpm
-WE assets/greystone.xpm
-EA assets/redbrick.xpm
+NO
 F 220,100,0
 C 225,30,0
+SO assets/maps/test1.cub
+WE assets/maps/test1.cub
+EA assets/maps/test1.cub
 
 111
-1N
+1N1
 111
