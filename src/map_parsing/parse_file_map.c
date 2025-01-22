@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parse_file_map.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: corin <corin@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ccraciun <ccraciun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 10:35:54 by corin             #+#    #+#             */
-/*   Updated: 2025/01/16 17:19:06 by corin            ###   ########.fr       */
+/*   Updated: 2025/01/22 14:08:36 by ccraciun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/cub3d.h"
-#include <stdbool.h>
-#include <stdio.h>
+#include "../../include/cub3d.h"
 
 bool	is_valid_map_line(const char *line)
 {

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   check_map_lines.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: corin <corin@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ccraciun <ccraciun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 15:49:39 by corin             #+#    #+#             */
-/*   Updated: 2025/01/16 17:20:59 by corin            ###   ########.fr       */
+/*   Updated: 2025/01/22 14:08:22 by ccraciun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/cub3d.h"
+#include "../../include/cub3d.h"
 
 static bool	check_line_length(char *line, int max_len, int len)
 {

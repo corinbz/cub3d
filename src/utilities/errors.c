@@ -1,26 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_files.c                                      :+:      :+:    :+:   */
+/*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: corin <corin@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ccraciun <ccraciun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/13 15:31:34 by ccraciun          #+#    #+#             */
-/*   Updated: 2025/01/16 16:00:32 by corin            ###   ########.fr       */
+/*   Created: 2024/11/26 10:57:43 by ccraciun          #+#    #+#             */
+/*   Updated: 2025/01/22 14:08:45 by ccraciun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/cub3d.h"
+#include "../../include/cub3d.h"
 
-bool	file_exists_open(const char *filename)
+void	mlx_show_error(void)
 {
-	int	fd;
+	puts(mlx_strerror(mlx_errno));
+	exit(EXIT_FAILURE);
+}
 
-	fd = open(filename, O_RDONLY);
-	if (fd != -1)
-	{
-		close(fd);
-		return (true);
-	}
+bool	dsp_err(char *err)
+{
+	printf("ERROR: %s", err);
 	return (false);
 }

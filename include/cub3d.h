@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: corin <corin@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ccraciun <ccraciun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 09:45:41 by ccraciun          #+#    #+#             */
-/*   Updated: 2025/01/16 17:17:03 by corin            ###   ########.fr       */
+/*   Updated: 2025/01/22 13:51:27 by ccraciun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,3 +127,6 @@ bool parse_colors(char *line, t_map *map);
 
 //parse_img_paths
 bool parse_paths(char *line, t_map *map);
+
+//key_hooks.c
+void	ft_keyhooks(mlx_key_data_t keydata, void *param);

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   utils_strings_2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: corin <corin@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ccraciun <ccraciun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 16:05:13 by corin             #+#    #+#             */
-/*   Updated: 2025/01/16 17:20:37 by corin            ###   ########.fr       */
+/*   Updated: 2025/01/22 14:09:16 by ccraciun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/cub3d.h"
+#include "../../include/cub3d.h"
 
 int	ft_strlen(const char *str)
 {

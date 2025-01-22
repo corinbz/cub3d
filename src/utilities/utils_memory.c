@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   utils_memory.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: corin <corin@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ccraciun <ccraciun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 10:44:52 by corin             #+#    #+#             */
-/*   Updated: 2025/01/16 17:19:32 by corin            ###   ########.fr       */
+/*   Updated: 2025/01/22 14:09:13 by ccraciun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/cub3d.h"
+#include "../../include/cub3d.h"
 
 void	*ft_calloc(size_t num_elements, size_t element_size)
 {

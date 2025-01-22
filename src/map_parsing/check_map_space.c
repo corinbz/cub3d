@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   check_map_space.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: corin <corin@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ccraciun <ccraciun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 15:49:27 by corin             #+#    #+#             */
-/*   Updated: 2025/01/16 17:20:54 by corin            ###   ########.fr       */
+/*   Updated: 2025/01/22 14:08:24 by ccraciun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/cub3d.h"
+#include "../../include/cub3d.h"
 
 static bool	check_addiacent_cells(char **map, int i, int j)
 {

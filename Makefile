@@ -1,14 +1,22 @@
 NAME    = cub3d
 CFLAGS  = -Wextra -Wall -Wextra -Wunreachable-code -Ofast -g
+
 #MLX STUFF
 LIBMLX	= ./MLX42
 HEADERS	:= -I ./include -I $(LIBMLX)/include
 LIBS	:= $(LIBMLX)/build/libmlx42.a -ldl -lglfw -pthread -lm
 
-SRCS    = $(shell find ./src -name "*.c")
-OBJS    = $(addprefix obj/, $(notdir $(SRCS:.c=.o)))
-OBJDIR  = ./obj/
+# Source directories
+SRC_DIRS = src src/utilities src/map_parsing
 
+# Find all .c files in the source directories
+SRCS    = $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.c))
+
+# Create object files in obj directory while maintaining directory structure
+OBJS    = $(patsubst src/%.c,obj/%.o,$(SRCS))
+OBJDIR  = ./obj
+
+# Colors for prettier output
 GREEN=\033[1;32m
 BLUE=\033[1;36m
 YELLOW=\033[1;33m
@@ -20,7 +28,8 @@ all: libmlx $(NAME)
 libmlx:
 	@cmake $(LIBMLX) -B $(LIBMLX)/build && make -C $(LIBMLX)/build -j4
 
-$(OBJDIR)%.o: ./src/%.c
+# Create object directories and compile
+$(OBJDIR)/%.o: src/%.c
 	@mkdir -p $(dir $@)
 	@$(CC) $(CFLAGS) -c $< -o $@ $(HEADERS)
 	@echo "$(GREEN)Compiled $< successfully!$(NC)"

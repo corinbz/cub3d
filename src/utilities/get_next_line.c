@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: corin <corin@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ccraciun <ccraciun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 14:35:28 by corin             #+#    #+#             */
-/*   Updated: 2025/01/16 15:15:55 by corin            ###   ########.fr       */
+/*   Updated: 2025/01/22 14:09:04 by ccraciun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ with a \n character.
 
 */
 
-#include "../include/cub3d.h"
+#include "../../include/cub3d.h"
 
 static char	*get_before_nl(char *s)
 {

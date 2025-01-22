@@ -1,23 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_structs.c                                     :+:      :+:    :+:   */
+/*   utils_files.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: corin <corin@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ccraciun <ccraciun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/17 10:24:01 by corin             #+#    #+#             */
-/*   Updated: 2025/01/16 15:59:51 by corin            ###   ########.fr       */
+/*   Created: 2025/01/13 15:31:34 by ccraciun          #+#    #+#             */
+/*   Updated: 2025/01/22 14:09:09 by ccraciun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/cub3d.h"
+#include "../../include/cub3d.h"
 
-void	free_map(t_map *map)
+bool	file_exists_open(const char *filename)
 {
-	free(map->north_png_path);
-	free(map->south_png_path);
-	free(map->west_png_path);
-	free(map->east_png_path);
-	ft_free_2d(map->cell_value);
-	free(map);
+	int	fd;
+
+	fd = open(filename, O_RDONLY);
+	if (fd != -1)
+	{
+		close(fd);
+		return (true);
+	}
+	return (false);
 }

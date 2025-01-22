@@ -1,25 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   errors.c                                           :+:      :+:    :+:   */
+/*   free_structs.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: corin <corin@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ccraciun <ccraciun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/26 10:57:43 by ccraciun          #+#    #+#             */
-/*   Updated: 2025/01/16 17:20:20 by corin            ###   ########.fr       */
+/*   Created: 2024/12/17 10:24:01 by corin             #+#    #+#             */
+/*   Updated: 2025/01/22 14:08:49 by ccraciun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/cub3d.h"
+#include "../../include/cub3d.h"
 
-void	mlx_show_error(void)
+void	free_map(t_map *map)
 {
-	puts(mlx_strerror(mlx_errno));
-	exit(EXIT_FAILURE);
-}
-
-bool	dsp_err(char *err)
-{
-	printf("ERROR: %s", err);
-	return (false);
+	free(map->north_png_path);
+	free(map->south_png_path);
+	free(map->west_png_path);
+	free(map->east_png_path);
+	ft_free_2d(map->cell_value);
+	free(map);
 }

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parse_img_paths.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: corin <corin@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ccraciun <ccraciun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 17:15:19 by corin             #+#    #+#             */
-/*   Updated: 2025/01/16 17:19:24 by corin            ###   ########.fr       */
+/*   Updated: 2025/01/22 14:08:40 by ccraciun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/cub3d.h"
+#include "../../include/cub3d.h"
 
 static bool	handle_texture_path(const char *prefix, char **map_path, char *line)
 {
