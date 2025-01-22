@@ -6,7 +6,7 @@
 /*   By: ccraciun <ccraciun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 09:54:18 by ccraciun          #+#    #+#             */
-/*   Updated: 2025/01/22 14:05:35 by erybolov         ###   ########.fr       */
+/*   Updated: 2025/01/22 14:10:27 by erybolov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void game_loop(void *param)
         else
             game->data.perp_wall_dist = game->data.side_dist_y - game->data.delta_dist_y;
         game->data.line_height = (int)(SCREEN_H / game->data.perp_wall_dist);
-        game->data.draw_start = game->data.line_height / 2 + SCREEN_H / 2;
+        game->data.draw_start = -game->data.line_height / 2 + SCREEN_H / 2;
         if (game->data.draw_start < 0)
             game->data.draw_start = 0;
         game->data.draw_end = game->data.line_height / 2 + SCREEN_H / 2;
