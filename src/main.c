@@ -6,7 +6,7 @@
 /*   By: ccraciun <ccraciun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 09:54:18 by ccraciun          #+#    #+#             */
-/*   Updated: 2025/01/22 12:56:29 by erybolov         ###   ########.fr       */
+/*   Updated: 2025/01/22 14:05:35 by erybolov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,25 +71,62 @@ void game_loop(void *param)
             if (game->data.map[game->data.map_x][game->data.map_y] > 0)
                 game->data.hit = true;
         }
-        x++;
+        if (game->data.side == 0)
+            game->data.perp_wall_dist = game->data.side_dist_x - game->data.delta_dist_x;
+        else
+            game->data.perp_wall_dist = game->data.side_dist_y - game->data.delta_dist_y;
+        game->data.line_height = (int)(SCREEN_H / game->data.perp_wall_dist);
+        game->data.draw_start = game->data.line_height / 2 + SCREEN_H / 2;
+        if (game->data.draw_start < 0)
+            game->data.draw_start = 0;
+        game->data.draw_end = game->data.line_height / 2 + SCREEN_H / 2;
+        if (game->data.draw_end >= SCREEN_H)
+            game->data.draw_end = SCREEN_H - 1;
     }
 }
 
-int main() {
-    t_game game = {0};
+void print_mlx_error_and_exit(void)
+{
+    printf("MLX error: %s\n", mlx_strerror(mlx_errno));
+    exit(EXIT_FAILURE);
+}
 
-    game.mlx = mlx_init(SCREEN_W, SCREEN_H, "cub3d", false);
-    if (!game.mlx) {
-        printf("Error initializing MLX: %s\n", mlx_strerror(mlx_errno));
-        return EXIT_FAILURE;
-    }
+void prepare_and_load_textures(t_game *game)
+{
+    game->mlx = mlx_init(SCREEN_W, SCREEN_H, "cub3d", false);
+    if (!game->mlx)
+        print_mlx_error_and_exit();
 
-    game.img = mlx_new_image(game.mlx, SCREEN_W, SCREEN_H);
-    if (!game.img || (mlx_image_to_window(game.mlx, game.img, 0, 0) < 0)) {
-        printf("Error creating image: %s\n", mlx_strerror(mlx_errno));
-        mlx_terminate(game.mlx);
-        return EXIT_FAILURE;
-    }
+    game->img = mlx_new_image(game->mlx, SCREEN_W, SCREEN_H);
+    if (!game->img || (mlx_image_to_window(game->mlx, game->img, 0, 0) < 0))
+        print_mlx_error_and_exit();
+
+    // game->textures.wall_n = mlx_load_png("textures/wall_n.png");
+    // if (!game->textures.wall_n)
+    //     print_mlx_error_and_exit();
+    // game->textures.wall_s = mlx_load_png("textures/wall_s.png");
+    // if (!game->textures.wall_s)
+    //     print_mlx_error_and_exit();
+    // game->textures.wall_w = mlx_load_png("textures/wall_w.png");
+    // if (!game->textures.wall_w)
+    //     print_mlx_error_and_exit();
+    // game->textures.wall_e = mlx_load_png("textures/wall_e.png");
+    // if (!game->textures.wall_e)
+    //     print_mlx_error_and_exit();
+    //
+    // game->textures.wall_n_img = mlx_texture_to_image(game->mlx, game->textures.wall_n);
+    // if (!game->textures.wall_n_img)
+    //     print_mlx_error_and_exit();
+    // game->textures.wall_s_img = mlx_texture_to_image(game->mlx, game->textures.wall_s);
+    // if (!game->textures.wall_s_img)
+    //     print_mlx_error_and_exit();
+    // game->textures.wall_w_img = mlx_texture_to_image(game->mlx, game->textures.wall_w);
+    // if (!game->textures.wall_w_img)
+    //     print_mlx_error_and_exit();
+    // game->textures.wall_e_img = mlx_texture_to_image(game->mlx, game->textures.wall_e);
+    // if (!game->textures.wall_e_img)
+    //     print_mlx_error_and_exit();
+
 
     int map[MAP_H][MAP_W] = {
         {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
@@ -103,22 +140,27 @@ int main() {
         {1, 0, 1, 0, 0, 0, 0, 1, 0, 1},
         {1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
     };
-    memcpy(game.data.map, map, sizeof(map));
+    memcpy(game->data.map, map, sizeof(map));
 
 
-    game.data.pos_x = 1;
-    game.data.pos_y = 1;
-    game.data.dir_x = -1;
-    game.data.dir_y = 0;
-    game.data.plane_x = 0;
-    game.data.plane_y = 0.66;
+    game->data.pos_x = 1;
+    game->data.pos_y = 1;
+    game->data.dir_x = -1;
+    game->data.dir_y = 0;
+    game->data.plane_x = 0;
+    game->data.plane_y = 0.66;
+}
+
+int main() {
+    t_game game = {0};
+
+    prepare_and_load_textures(&game);
 
 
-    //
     // mlx_key_hook(game.mlx, key_callback, &game);
     mlx_loop_hook(game.mlx, game_loop, &game);
     mlx_loop(game.mlx);
-    //
+
     mlx_delete_image(game.mlx, game.img);
     mlx_terminate(game.mlx);
 

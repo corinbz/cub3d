@@ -6,7 +6,7 @@
 /*   By: ccraciun <ccraciun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 09:45:41 by ccraciun          #+#    #+#             */
-/*   Updated: 2025/01/22 12:17:39 by erybolov         ###   ########.fr       */
+/*   Updated: 2025/01/22 14:05:33 by erybolov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,9 @@ typedef struct s_data
 	int			map_y;
 	int			step_x; //direction to step
 	int			step_y;
+	int			line_height;
+	int			draw_start;
+	int			draw_end;
 	int			side; //wall hit side
 	bool		hit;
 	double		pos_x; //player pos
@@ -50,11 +53,24 @@ typedef struct s_data
 	double		perp_wall_dist; //util to calc ray length
 }	t_data;
 
+typedef struct s_textures
+{
+	mlx_texture_t	*wall_n;
+	mlx_texture_t	*wall_s;
+	mlx_texture_t	*wall_w;
+	mlx_texture_t	*wall_e;
+	mlx_image_t		*wall_n_img;
+	mlx_image_t		*wall_s_img;
+	mlx_image_t		*wall_w_img;
+	mlx_image_t		*wall_e_img;
+} t_textures;
+
 typedef struct    s_game
 {
 	mlx_t			*mlx;
 	mlx_image_t		*img;
 	t_data			data;
+	t_textures		textures;
 }	t_game;
 
 #endif
