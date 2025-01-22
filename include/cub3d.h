@@ -6,7 +6,7 @@
 /*   By: ccraciun <ccraciun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 09:45:41 by ccraciun          #+#    #+#             */
-/*   Updated: 2024/12/08 22:53:22 by erybolov         ###   ########.fr       */
+/*   Updated: 2025/01/22 12:17:39 by erybolov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,24 +24,37 @@
 #define SCREEN_H 600
 #define MAP_W 10
 #define MAP_H 10
-#define RAYS 200
 
-
-typedef struct    s_player
+typedef struct s_data
 {
-	double x;
-	double y;
-	double angle;
-	double fov;
-}	t_player;
+	int			map[MAP_H][MAP_W];
+	int			map_x; //current player pos
+	int			map_y;
+	int			step_x; //direction to step
+	int			step_y;
+	int			side; //wall hit side
+	bool		hit;
+	double		pos_x; //player pos
+	double		pos_y;
+	double		dir_x; //player initial direction
+	double		dir_y;
+	double		plane_x; //plane fov
+	double		plane_y;
+	double		camera_x; //normalized camera coordinate [-1 to 1]
+	double		ray_dir_x; //ray direction
+	double		ray_dir_y;
+	double		side_dist_x; //distance to next vertical line
+	double		side_dist_y; //distance to next horizontal line
+	double		delta_dist_x; //distance between vertical lines
+	double		delta_dist_y; //distance between horizontal lines
+	double		perp_wall_dist; //util to calc ray length
+}	t_data;
 
 typedef struct    s_game
 {
-	int				map[MAP_H][MAP_W];
-	t_player		player;
 	mlx_t			*mlx;
 	mlx_image_t		*img;
-	bool			keyState[512];
+	t_data			data;
 }	t_game;
 
 #endif
