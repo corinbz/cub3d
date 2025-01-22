@@ -1,8 +1,7 @@
 TODO:
 
-[ ]Map lines must not be separated by newline
-[ ]Map is surrounded by walls
-
+[] key hooks
+[] load and draw images (resize them maybe?)
 
 
 links:
