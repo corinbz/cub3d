@@ -50,8 +50,11 @@ void game_loop(void *param)
 
     game = (t_game *)param;
     x = 0;
+    memset(game->main_img->pixels, 0, game->main_img->width * game->main_img->height * sizeof(int32_t));
+
     while (x < SCREEN_W)
     {
+        game->data.hit = false;
         game->data.camera_x = 2 * x / (double)SCREEN_W - 1;
         game->data.ray_dir_x = game->data.dir_x + game->data.plane_x * game->data.camera_x;
         game->data.ray_dir_y = game->data.dir_y + game->data.plane_y * game->data.camera_x;
@@ -188,12 +191,60 @@ void prepare_and_load_textures(t_game *game)
     game->data.plane_y = 0.66;
 }
 
+void key_callback(mlx_key_data_t keydata, void* param)
+{
+    t_game  *game;
+    double  move_speed;
+    double  rot_speed;
+    double  old_dir_x;
+    double  old_plane_x;
+    
+
+    game = (t_game *)param;
+    move_speed = 0.1;
+    rot_speed = 0.1;
+    if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
+        mlx_close_window(game->mlx);
+    if (keydata.key == MLX_KEY_W && keydata.action == MLX_PRESS)
+    {
+        if (game->data.map[(int)(game->data.pos_x + game->data.dir_x * move_speed)][(int)game->data.pos_y] == 0)
+            game->data.pos_x += game->data.dir_x * move_speed;
+        if (game->data.map[(int)game->data.pos_x][(int)(game->data.pos_y + game->data.dir_y * move_speed)] == 0)
+            game->data.pos_y += game->data.dir_y * move_speed;
+    }
+    if (keydata.key == MLX_KEY_S && keydata.action == MLX_PRESS)
+    {
+        if (game->data.map[(int)(game->data.pos_x - game->data.dir_x * move_speed)][(int)game->data.pos_y] == 0)
+            game->data.pos_x -= game->data.dir_x * move_speed;
+        if (game->data.map[(int)game->data.pos_x][(int)(game->data.pos_y - game->data.dir_y * move_speed)] == 0)
+            game->data.pos_y -= game->data.dir_y * move_speed;
+    }
+    if (keydata.key == MLX_KEY_D && keydata.action == MLX_PRESS)
+    {
+        old_dir_x = game->data.dir_x;
+        game->data.dir_x = game->data.dir_x * cos(-rot_speed) - game->data.dir_y * sin(-rot_speed);
+        game->data.dir_y = old_dir_x * sin(-rot_speed) + game->data.dir_y * cos(-rot_speed);
+        old_plane_x = game->data.plane_x;
+        game->data.plane_x = game->data.plane_x * cos(-rot_speed) - game->data.plane_y * sin(-rot_speed);
+        game->data.plane_y = old_plane_x * sin(-rot_speed) + game->data.plane_y * cos(-rot_speed);
+    }
+    if (keydata.key == MLX_KEY_A && keydata.action == MLX_PRESS)
+    {
+        old_dir_x = game->data.dir_x;
+        game->data.dir_x = game->data.dir_x * cos(rot_speed) - game->data.dir_y * sin(rot_speed);
+        game->data.dir_y = old_dir_x * sin(rot_speed) + game->data.dir_y * cos(rot_speed);
+        old_plane_x = game->data.plane_x;
+        game->data.plane_x = game->data.plane_x * cos(rot_speed) - game->data.plane_y * sin(rot_speed);
+        game->data.plane_y = old_plane_x * sin(rot_speed) + game->data.plane_y * cos(rot_speed);
+    }
+}
+
 int main() {
     t_game game = {0};
 
     prepare_and_load_textures(&game);
 
-    // mlx_key_hook(game.mlx, key_callback, &game);
+    mlx_key_hook(game.mlx, &key_callback, &game);
     mlx_loop_hook(game.mlx, game_loop, &game);
     mlx_loop(game.mlx);
 
