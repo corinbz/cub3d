@@ -90,7 +90,7 @@ void game_loop(void *param)
         game->data.plane_y = old_plane_x * sin(rot_speed) + game->data.plane_y * cos(rot_speed);
     }
 
-    memset(game->main_img->pixels, 0, game->main_img->width * game->main_img->height * sizeof(int32_t));
+    memset(game->main_img->pixels, 255, game->main_img->width * game->main_img->height * sizeof(int32_t));
 
     while (x < SCREEN_W)
     {
