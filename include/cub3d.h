@@ -51,6 +51,7 @@ typedef struct s_data
 	double		delta_dist_x; //distance between vertical lines
 	double		delta_dist_y; //distance between horizontal lines
 	double		perp_wall_dist; //util to calc ray length
+	uint32_t	wall_color; //different for n s w e
 }	t_data;
 
 typedef struct s_textures
@@ -68,7 +69,7 @@ typedef struct s_textures
 typedef struct    s_game
 {
 	mlx_t			*mlx;
-	mlx_image_t		*img;
+	mlx_image_t		*main_img;
 	t_data			data;
 	t_textures		textures;
 }	t_game;

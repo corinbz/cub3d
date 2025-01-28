@@ -12,6 +12,37 @@
 
 #include "../include/cub3d.h"
 
+
+//helpers; move later
+void put_vertical_line(mlx_image_t* img, uint32_t x, uint32_t y1, uint32_t y2, uint32_t color)
+{
+    uint32_t temp;
+    uint32_t y;
+
+    if (y2 < y1)
+    {
+        temp = y1;
+        y1 = y2;
+        y2 = temp;
+    }
+    if (x >= img->width || y1 >= img->height)
+        return;
+    if (y2 >= img->height)
+        y2 = img->height - 1;
+    y = y1;
+    while (y <= y2)
+    {
+        mlx_put_pixel(img, x, y, color);
+        y++;
+    }
+}
+
+void print_mlx_error_and_exit(void)
+{
+    printf("MLX error: %s\n", mlx_strerror(mlx_errno));
+    exit(EXIT_FAILURE);
+}
+
 void game_loop(void *param)
 {
     t_game *game;
@@ -82,14 +113,19 @@ void game_loop(void *param)
         game->data.draw_end = game->data.line_height / 2 + SCREEN_H / 2;
         if (game->data.draw_end >= SCREEN_H)
             game->data.draw_end = SCREEN_H - 1;
+        if (game->data.side == 1)
+            if (game->data.ray_dir_y > 0)
+                game->data.wall_color = 0xFF0000FF;
+            else
+                game->data.wall_color = 0x00FF00FF;
+        else
+            if (game->data.ray_dir_x > 0)
+                game->data.wall_color = 0x0000FFFF;
+            else
+                game->data.wall_color = 0xFFFF00FF;
+        put_vertical_line(game->main_img, x, game->data.draw_start, game->data.draw_end, game->data.wall_color);
         x++;
     }
-}
-
-void print_mlx_error_and_exit(void)
-{
-    printf("MLX error: %s\n", mlx_strerror(mlx_errno));
-    exit(EXIT_FAILURE);
 }
 
 void prepare_and_load_textures(t_game *game)
@@ -98,8 +134,8 @@ void prepare_and_load_textures(t_game *game)
     if (!game->mlx)
         print_mlx_error_and_exit();
 
-    game->img = mlx_new_image(game->mlx, SCREEN_W, SCREEN_H);
-    if (!game->img || (mlx_image_to_window(game->mlx, game->img, 0, 0) < 0))
+    game->main_img = mlx_new_image(game->mlx, SCREEN_W, SCREEN_H);
+    if (!game->main_img || (mlx_image_to_window(game->mlx, game->main_img, 0, 0) < 0))
         print_mlx_error_and_exit();
 
     game->textures.wall_n = mlx_load_png("textures/wall_n.png");
@@ -161,7 +197,7 @@ int main() {
     mlx_loop_hook(game.mlx, game_loop, &game);
     mlx_loop(game.mlx);
 
-    mlx_delete_image(game.mlx, game.img);
+    mlx_delete_image(game.mlx, game.main_img); //make clean up func to delete textures as well
     mlx_terminate(game.mlx);
 
     return EXIT_SUCCESS;
