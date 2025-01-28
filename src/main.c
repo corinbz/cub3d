@@ -47,9 +47,49 @@ void game_loop(void *param)
 {
     t_game *game;
     int x;
+    double  move_speed;
+    double  rot_speed;
+    double  old_dir_x;
+    double  old_plane_x;
 
     game = (t_game *)param;
     x = 0;
+
+    move_speed = game->mlx->delta_time * 5.0;
+    rot_speed = game->mlx->delta_time * 3.0;
+    if (mlx_is_key_down(game->mlx, MLX_KEY_W))
+    {
+        if (game->data.map[(int)(game->data.pos_x + game->data.dir_x * move_speed)][(int)game->data.pos_y] == 0)
+            game->data.pos_x += game->data.dir_x * move_speed;
+        if (game->data.map[(int)game->data.pos_x][(int)(game->data.pos_y + game->data.dir_y * move_speed)] == 0)
+            game->data.pos_y += game->data.dir_y * move_speed;
+    }
+    if (mlx_is_key_down(game->mlx, MLX_KEY_S))
+    {
+        if (game->data.map[(int)(game->data.pos_x - game->data.dir_x * move_speed)][(int)game->data.pos_y] == 0)
+            game->data.pos_x -= game->data.dir_x * move_speed;
+        if (game->data.map[(int)game->data.pos_x][(int)(game->data.pos_y - game->data.dir_y * move_speed)] == 0)
+            game->data.pos_y -= game->data.dir_y * move_speed;
+    }
+    if (mlx_is_key_down(game->mlx, MLX_KEY_D))
+    {
+        old_dir_x = game->data.dir_x;
+        game->data.dir_x = game->data.dir_x * cos(-rot_speed) - game->data.dir_y * sin(-rot_speed);
+        game->data.dir_y = old_dir_x * sin(-rot_speed) + game->data.dir_y * cos(-rot_speed);
+        old_plane_x = game->data.plane_x;
+        game->data.plane_x = game->data.plane_x * cos(-rot_speed) - game->data.plane_y * sin(-rot_speed);
+        game->data.plane_y = old_plane_x * sin(-rot_speed) + game->data.plane_y * cos(-rot_speed);
+    }
+    if (mlx_is_key_down(game->mlx, MLX_KEY_A))
+    {
+        old_dir_x = game->data.dir_x;
+        game->data.dir_x = game->data.dir_x * cos(rot_speed) - game->data.dir_y * sin(rot_speed);
+        game->data.dir_y = old_dir_x * sin(rot_speed) + game->data.dir_y * cos(rot_speed);
+        old_plane_x = game->data.plane_x;
+        game->data.plane_x = game->data.plane_x * cos(rot_speed) - game->data.plane_y * sin(rot_speed);
+        game->data.plane_y = old_plane_x * sin(rot_speed) + game->data.plane_y * cos(rot_speed);
+    }
+
     memset(game->main_img->pixels, 0, game->main_img->width * game->main_img->height * sizeof(int32_t));
 
     while (x < SCREEN_W)
@@ -193,49 +233,11 @@ void prepare_and_load_textures(t_game *game)
 
 void key_callback(mlx_key_data_t keydata, void* param)
 {
-    t_game  *game;
-    double  move_speed;
-    double  rot_speed;
-    double  old_dir_x;
-    double  old_plane_x;
+   t_game  *game;
 
     game = (t_game *)param;
-    move_speed = game->mlx->delta_time * 5.0;
-    rot_speed = game->mlx->delta_time * 3.0;
     if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
         mlx_close_window(game->mlx);
-    if (keydata.key == MLX_KEY_W && (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT))
-    {
-        if (game->data.map[(int)(game->data.pos_x + game->data.dir_x * move_speed)][(int)game->data.pos_y] == 0)
-            game->data.pos_x += game->data.dir_x * move_speed;
-        if (game->data.map[(int)game->data.pos_x][(int)(game->data.pos_y + game->data.dir_y * move_speed)] == 0)
-            game->data.pos_y += game->data.dir_y * move_speed;
-    }
-    if (keydata.key == MLX_KEY_S && (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT))
-    {
-        if (game->data.map[(int)(game->data.pos_x - game->data.dir_x * move_speed)][(int)game->data.pos_y] == 0)
-            game->data.pos_x -= game->data.dir_x * move_speed;
-        if (game->data.map[(int)game->data.pos_x][(int)(game->data.pos_y - game->data.dir_y * move_speed)] == 0)
-            game->data.pos_y -= game->data.dir_y * move_speed;
-    }
-    if (keydata.key == MLX_KEY_D && (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT))
-    {
-        old_dir_x = game->data.dir_x;
-        game->data.dir_x = game->data.dir_x * cos(-rot_speed) - game->data.dir_y * sin(-rot_speed);
-        game->data.dir_y = old_dir_x * sin(-rot_speed) + game->data.dir_y * cos(-rot_speed);
-        old_plane_x = game->data.plane_x;
-        game->data.plane_x = game->data.plane_x * cos(-rot_speed) - game->data.plane_y * sin(-rot_speed);
-        game->data.plane_y = old_plane_x * sin(-rot_speed) + game->data.plane_y * cos(-rot_speed);
-    }
-    if (keydata.key == MLX_KEY_A && (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT))
-    {
-        old_dir_x = game->data.dir_x;
-        game->data.dir_x = game->data.dir_x * cos(rot_speed) - game->data.dir_y * sin(rot_speed);
-        game->data.dir_y = old_dir_x * sin(rot_speed) + game->data.dir_y * cos(rot_speed);
-        old_plane_x = game->data.plane_x;
-        game->data.plane_x = game->data.plane_x * cos(rot_speed) - game->data.plane_y * sin(rot_speed);
-        game->data.plane_y = old_plane_x * sin(rot_speed) + game->data.plane_y * cos(rot_speed);
-    }
 }
 
 void cleanup_and_terminate_mlx(t_game *game)
