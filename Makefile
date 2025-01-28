@@ -15,7 +15,7 @@ YELLOW=\033[1;33m
 RED=\033[1;31m
 NC=\033[0m # No Color
 
-all: libmlx $(NAME)
+all: $(NAME)
 
 libmlx:
 	@cmake $(LIBMLX) -B $(LIBMLX)/build && make -C $(LIBMLX)/build -j4
@@ -31,7 +31,6 @@ $(NAME): $(OBJS)
 
 clean:
 	@rm -rf $(OBJDIR)
-	@rm -rf $(LIBMLX)/build
 	@echo "$(YELLOW)$(NAME) -> Object files removed!$(NC)"
 
 fclean: clean
