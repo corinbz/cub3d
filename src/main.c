@@ -238,6 +238,20 @@ void key_callback(mlx_key_data_t keydata, void* param)
     }
 }
 
+void cleanup_and_terminate_mlx(t_game *game)
+{
+    mlx_delete_texture(game->textures.wall_n);
+    mlx_delete_texture(game->textures.wall_s);
+    mlx_delete_texture(game->textures.wall_w);
+    mlx_delete_texture(game->textures.wall_e);
+    mlx_delete_image(game->mlx, game->textures.wall_n_img);
+    mlx_delete_image(game->mlx, game->textures.wall_s_img);
+    mlx_delete_image(game->mlx, game->textures.wall_w_img);
+    mlx_delete_image(game->mlx, game->textures.wall_e_img);
+    mlx_delete_image(game->mlx, game->main_img);
+    mlx_terminate(game->mlx);
+}
+
 int main() {
     t_game game = {0};
 
@@ -247,8 +261,6 @@ int main() {
     mlx_loop_hook(game.mlx, game_loop, &game);
     mlx_loop(game.mlx);
 
-    mlx_delete_image(game.mlx, game.main_img); //make clean up func to delete textures as well
-    mlx_terminate(game.mlx);
-
+    cleanup_and_terminate_mlx(&game);
     return EXIT_SUCCESS;
 }
