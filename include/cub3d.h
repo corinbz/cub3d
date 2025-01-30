@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccraciun <ccraciun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: erybolov <erybolov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 09:45:41 by ccraciun          #+#    #+#             */
-/*   Updated: 2025/01/22 14:05:33 by erybolov         ###   ########.fr       */
+/*   Updated: 2025/01/30 22:43:38 by erybolov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@
 #define SCREEN_H 600
 #define MAP_W 10
 #define MAP_H 10
+#define WALL_IMG_W 64
+#define WALL_IMG_H 64
 
 typedef struct s_data
 {
@@ -51,7 +53,7 @@ typedef struct s_data
 	double		delta_dist_x; //distance between vertical lines
 	double		delta_dist_y; //distance between horizontal lines
 	double		perp_wall_dist; //util to calc ray length
-	uint32_t	wall_color; //different for n s w e
+	mlx_image_t	*wall_img; //different for n s w e
 }	t_data;
 
 typedef struct s_textures

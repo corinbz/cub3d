@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccraciun <ccraciun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: erybolov <erybolov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 09:54:18 by ccraciun          #+#    #+#             */
-/*   Updated: 2025/01/22 14:23:53 by erybolov         ###   ########.fr       */
+/*   Updated: 2025/01/30 22:46:25 by erybolov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,33 +14,46 @@
 
 
 //helpers; move later
-void put_vertical_line(mlx_image_t* img, uint32_t x, uint32_t y1, uint32_t y2, uint32_t color)
+uint32_t    get_rgba(int r, int g, int b, int a)
 {
-    uint32_t temp;
-    uint32_t y;
-
-    if (y2 < y1)
-    {
-        temp = y1;
-        y1 = y2;
-        y2 = temp;
-    }
-    if (x >= img->width || y1 >= img->height)
-        return;
-    if (y2 >= img->height)
-        y2 = img->height - 1;
-    y = y1;
-    while (y <= y2)
-    {
-        mlx_put_pixel(img, x, y, color);
-        y++;
-    }
+    return (r << 24 | g << 16 | b << 8 | a);
 }
 
 void print_mlx_error_and_exit(void)
 {
     printf("MLX error: %s\n", mlx_strerror(mlx_errno));
     exit(EXIT_FAILURE);
+}
+
+void render_wall_texture(t_game *game, int x)
+{
+    double  wall_x;
+    double  wall_player_ratio;
+    double  tex_pos;
+    int     tex_x;
+    int     y;
+    
+    if (game->data.side == 0)
+        wall_x = game->data.pos_y + game->data.perp_wall_dist * game->data.ray_dir_y;
+    else
+        wall_x = game->data.pos_x + game->data.perp_wall_dist * game->data.ray_dir_x;
+    wall_x -= floor(wall_x);
+    tex_x = (int)(wall_x * (double)WALL_IMG_W);
+    if (game->data.side == 0 && game->data.ray_dir_x > 0)
+        tex_x = WALL_IMG_W - tex_x - 1;
+    if (game->data.side == 1 && game->data.ray_dir_y < 0)
+        tex_x = WALL_IMG_W - tex_x - 1;
+    wall_player_ratio = 1.0 * WALL_IMG_H / game->data.line_height;
+    tex_pos = (game->data.draw_start - SCREEN_H / 2 + game->data.line_height / 2) * wall_player_ratio;
+    y = game->data.draw_start;
+    while (y < game->data.draw_end)
+    {
+        int tex_y = (int)tex_pos & (WALL_IMG_H - 1);
+        tex_pos += wall_player_ratio;
+        uint8_t *pixel = (uint8_t *)&game->data.wall_img->pixels[(tex_y * WALL_IMG_W + tex_x) * 4];
+        mlx_put_pixel(game->main_img, x, y, get_rgba(pixel[0], pixel[1], pixel[2], pixel[3]));
+        y++;
+    }
 }
 
 void game_loop(void *param)
@@ -54,7 +67,7 @@ void game_loop(void *param)
 
     game = (t_game *)param;
     x = 0;
-
+    // printf("frame time: %f\n", 1.0/ game->mlx->delta_time);
     move_speed = game->mlx->delta_time * 5.0;
     rot_speed = game->mlx->delta_time * 3.0;
     if (mlx_is_key_down(game->mlx, MLX_KEY_W))
@@ -158,15 +171,15 @@ void game_loop(void *param)
             game->data.draw_end = SCREEN_H - 1;
         if (game->data.side == 1)
             if (game->data.ray_dir_y > 0)
-                game->data.wall_color = 0xFF0000FF;
+                game->data.wall_img = game->textures.wall_n_img;
             else
-                game->data.wall_color = 0x00FF00FF;
+                game->data.wall_img = game->textures.wall_s_img;
         else
             if (game->data.ray_dir_x > 0)
-                game->data.wall_color = 0x0000FFFF;
+                game->data.wall_img = game->textures.wall_w_img;
             else
-                game->data.wall_color = 0xFFFF00FF;
-        put_vertical_line(game->main_img, x, game->data.draw_start, game->data.draw_end, game->data.wall_color);
+                game->data.wall_img = game->textures.wall_e_img;
+        render_wall_texture(game, x);
         x++;
     }
 }
