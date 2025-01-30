@@ -6,7 +6,7 @@
 /*   By: erybolov <erybolov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 09:54:18 by ccraciun          #+#    #+#             */
-/*   Updated: 2025/01/30 22:46:25 by erybolov         ###   ########.fr       */
+/*   Updated: 2025/01/30 23:01:36 by erybolov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void render_wall_texture(t_game *game, int x)
     double  tex_pos;
     int     tex_x;
     int     y;
+    uint8_t *pixel;
     
     if (game->data.side == 0)
         wall_x = game->data.pos_y + game->data.perp_wall_dist * game->data.ray_dir_y;
@@ -46,12 +47,48 @@ void render_wall_texture(t_game *game, int x)
     wall_player_ratio = 1.0 * WALL_IMG_H / game->data.line_height;
     tex_pos = (game->data.draw_start - SCREEN_H / 2 + game->data.line_height / 2) * wall_player_ratio;
     y = game->data.draw_start;
-    while (y < game->data.draw_end)
+    while (y <= game->data.draw_end)
     {
         int tex_y = (int)tex_pos & (WALL_IMG_H - 1);
         tex_pos += wall_player_ratio;
-        uint8_t *pixel = (uint8_t *)&game->data.wall_img->pixels[(tex_y * WALL_IMG_W + tex_x) * 4];
+        pixel = (uint8_t *)&game->data.wall_img->pixels[(tex_y * WALL_IMG_W + tex_x) * 4];
         mlx_put_pixel(game->main_img, x, y, get_rgba(pixel[0], pixel[1], pixel[2], pixel[3]));
+        y++;
+    }
+}
+
+void draw_ceiling(t_game *game)
+{
+    int x;
+    int y;
+
+    y = 0;
+    while (y < SCREEN_H / 2)
+    {
+        x = 0;
+        while (x < SCREEN_W)
+        {
+            mlx_put_pixel(game->main_img, x, y, get_rgba(100, 100, 255, 255));
+            x++;
+        }
+        y++;
+    }
+}
+
+void draw_floor(t_game *game)
+{
+    int x;
+    int y;
+    
+    y = SCREEN_H / 2;
+    while (y < SCREEN_H)
+    {
+        x = 0;
+        while (x < SCREEN_W)
+        {
+            mlx_put_pixel(game->main_img, x, y, get_rgba(100, 255, 100, 255));
+            x++;
+        }
         y++;
     }
 }
@@ -103,7 +140,8 @@ void game_loop(void *param)
         game->data.plane_y = old_plane_x * sin(rot_speed) + game->data.plane_y * cos(rot_speed);
     }
 
-    memset(game->main_img->pixels, 255, game->main_img->width * game->main_img->height * sizeof(int32_t));
+    draw_ceiling(game);
+    draw_floor(game);
 
     while (x < SCREEN_W)
     {
