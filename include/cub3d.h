@@ -6,7 +6,7 @@
 /*   By: erybolov <erybolov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 09:45:41 by ccraciun          #+#    #+#             */
-/*   Updated: 2025/01/30 22:43:38 by erybolov         ###   ########.fr       */
+/*   Updated: 2025/02/14 06:54:37 by erybolov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,5 +75,10 @@ typedef struct    s_game
 	t_data			data;
 	t_textures		textures;
 }	t_game;
+
+//helpers
+uint32_t	get_rgba(int r, int g, int b, int a);
+void		print_mlx_error_and_exit(void);
+void		cleanup_and_terminate_mlx(const t_game *game);
 
 #endif

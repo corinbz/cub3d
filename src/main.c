@@ -6,34 +6,21 @@
 /*   By: erybolov <erybolov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 09:54:18 by ccraciun          #+#    #+#             */
-/*   Updated: 2025/01/30 23:01:36 by erybolov         ###   ########.fr       */
+/*   Updated: 2025/02/14 06:57:53 by erybolov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
-
-//helpers; move later
-uint32_t    get_rgba(int r, int g, int b, int a)
+void render_wall_texture(const t_game *game, int x)
 {
-    return (r << 24 | g << 16 | b << 8 | a);
-}
-
-void print_mlx_error_and_exit(void)
-{
-    printf("MLX error: %s\n", mlx_strerror(mlx_errno));
-    exit(EXIT_FAILURE);
-}
-
-void render_wall_texture(t_game *game, int x)
-{
-    double  wall_x;
-    double  wall_player_ratio;
-    double  tex_pos;
-    int     tex_x;
-    int     y;
+	double  wall_x;
+	double  wall_player_ratio;
+	double  tex_pos;
+	int	 tex_x;
+	int     y;
     uint8_t *pixel;
-    
+
     if (game->data.side == 0)
         wall_x = game->data.pos_y + game->data.perp_wall_dist * game->data.ray_dir_y;
     else
@@ -51,13 +38,13 @@ void render_wall_texture(t_game *game, int x)
     {
         int tex_y = (int)tex_pos & (WALL_IMG_H - 1);
         tex_pos += wall_player_ratio;
-        pixel = (uint8_t *)&game->data.wall_img->pixels[(tex_y * WALL_IMG_W + tex_x) * 4];
+        pixel = &game->data.wall_img->pixels[(tex_y * WALL_IMG_W + tex_x) * 4];
         mlx_put_pixel(game->main_img, x, y, get_rgba(pixel[0], pixel[1], pixel[2], pixel[3]));
         y++;
     }
 }
 
-void draw_ceiling(t_game *game)
+void draw_ceiling(const t_game *game)
 {
     int x;
     int y;
@@ -75,11 +62,11 @@ void draw_ceiling(t_game *game)
     }
 }
 
-void draw_floor(t_game *game)
+void draw_floor(const t_game *game)
 {
     int x;
     int y;
-    
+
     y = SCREEN_H / 2;
     while (y < SCREEN_H)
     {
@@ -262,7 +249,7 @@ void prepare_and_load_textures(t_game *game)
     int map[MAP_H][MAP_W] = {
         {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
         {1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-        {1, 0, 1, 0, 1, 0, 1, 1, 0, 1},
+        {1, 0, 0, 0, 1, 0, 1, 1, 0, 1},
         {1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
         {1, 1, 1, 1, 0, 1, 1, 1, 1, 1},
         {1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
@@ -274,8 +261,8 @@ void prepare_and_load_textures(t_game *game)
     memcpy(game->data.map, map, sizeof(map));
 
 
-    game->data.pos_x = 1;
-    game->data.pos_y = 1;
+    game->data.pos_x = 2;
+    game->data.pos_y = 2;
     game->data.dir_x = -1;
     game->data.dir_y = 0;
     game->data.plane_x = 0;
@@ -289,20 +276,6 @@ void key_callback(mlx_key_data_t keydata, void* param)
     game = (t_game *)param;
     if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
         mlx_close_window(game->mlx);
-}
-
-void cleanup_and_terminate_mlx(t_game *game)
-{
-    mlx_delete_texture(game->textures.wall_n);
-    mlx_delete_texture(game->textures.wall_s);
-    mlx_delete_texture(game->textures.wall_w);
-    mlx_delete_texture(game->textures.wall_e);
-    mlx_delete_image(game->mlx, game->textures.wall_n_img);
-    mlx_delete_image(game->mlx, game->textures.wall_s_img);
-    mlx_delete_image(game->mlx, game->textures.wall_w_img);
-    mlx_delete_image(game->mlx, game->textures.wall_e_img);
-    mlx_delete_image(game->mlx, game->main_img);
-    mlx_terminate(game->mlx);
 }
 
 int main() {
