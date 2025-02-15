@@ -6,7 +6,7 @@
 /*   By: erybolov <erybolov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 09:45:41 by ccraciun          #+#    #+#             */
-/*   Updated: 2025/02/14 06:54:37 by erybolov         ###   ########.fr       */
+/*   Updated: 2025/02/15 09:25:46 by erybolov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,5 +80,14 @@ typedef struct    s_game
 uint32_t	get_rgba(int r, int g, int b, int a);
 void		print_mlx_error_and_exit(void);
 void		cleanup_and_terminate_mlx(const t_game *game);
+
+//callbacks
+void		key_callback(mlx_key_data_t keydata, void* param);
+
+//game loop and render
+void		game_loop(void *param);
+void		draw_floor(const t_game *game);
+void		draw_ceiling(const t_game *game);
+void		render_wall_texture(const t_game *game, int x);
 
 #endif
