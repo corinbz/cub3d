@@ -6,7 +6,7 @@
 /*   By: ccraciun <ccraciun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 09:45:41 by ccraciun          #+#    #+#             */
-/*   Updated: 2025/02/15 09:05:46 by ccraciun         ###   ########.fr       */
+/*   Updated: 2025/02/15 10:59:14 by erybolov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,21 +37,6 @@
 #define FILE_NO_ACCES "File could not be opened"
 
 //STRUCTS
-typedef struct s_textures
-{
-	mlx_texture_t	*NO;
-	mlx_texture_t	*SO;
-	mlx_texture_t	*WE;
-	mlx_texture_t	*EA;
-}	t_textures;
-
-typedef struct s_imgs
-{
-	mlx_image_t	*NO;
-	mlx_image_t	*SO;
-	mlx_image_t	*WE;
-	mlx_image_t	*EA;
-}	t_imgs;
 
 typedef struct s_map
 {
@@ -74,12 +59,55 @@ typedef struct s_player_pos
 	size_t	y;
 }	t_player_pos;
 
+typedef struct s_data
+{
+	int			map[MAP_H][MAP_W];
+	int			map_x; //current player pos
+	int			map_y;
+	int			step_x; //direction to step
+	int			step_y;
+	int			line_height;
+	int			draw_start;
+	int			draw_end;
+	int			side; //wall hit side
+	bool		hit;
+	double		pos_x; //player pos
+	double		pos_y;
+	double		dir_x; //player initial direction
+	double		dir_y;
+	double		plane_x; //plane fov
+	double		plane_y;
+	double		camera_x; //normalized camera coordinate [-1 to 1]
+	double		ray_dir_x; //ray direction
+	double		ray_dir_y;
+	double		side_dist_x; //distance to next vertical line
+	double		side_dist_y; //distance to next horizontal line
+	double		delta_dist_x; //distance between vertical lines
+	double		delta_dist_y; //distance between horizontal lines
+	double		perp_wall_dist; //util to calc ray length
+	mlx_image_t	*wall_img; //different for n s w e
+}	t_data;
+
+typedef struct s_textures
+{
+	mlx_texture_t	*wall_n;
+	mlx_texture_t	*wall_s;
+	mlx_texture_t	*wall_w;
+	mlx_texture_t	*wall_e;
+	mlx_image_t		*wall_n_img;
+	mlx_image_t		*wall_s_img;
+	mlx_image_t		*wall_w_img;
+	mlx_image_t		*wall_e_img;
+} t_textures;
+
 typedef struct s_game
 {
 	mlx_t					*mlx;
 	t_player_pos			*player_pos;
 	t_map					*map;
-	t_imgs					*imgs;
+	mlx_image_t				*main_img;
+	t_data					data; //TODO use ptr?
+	t_textures				textures; //TODO use ptr?
 }	t_game;
 
 //FUNCTIONS
@@ -138,57 +166,7 @@ bool parse_colors(char *line, t_map *map);
 //parse_img_paths
 bool parse_paths(char *line, t_map *map);
 
-//key_hooks.c
-void	ft_keyhooks(mlx_key_data_t keydata, void *param);
 
-typedef struct s_data
-{
-	int			map[MAP_H][MAP_W];
-	int			map_x; //current player pos
-	int			map_y;
-	int			step_x; //direction to step
-	int			step_y;
-	int			line_height;
-	int			draw_start;
-	int			draw_end;
-	int			side; //wall hit side
-	bool		hit;
-	double		pos_x; //player pos
-	double		pos_y;
-	double		dir_x; //player initial direction
-	double		dir_y;
-	double		plane_x; //plane fov
-	double		plane_y;
-	double		camera_x; //normalized camera coordinate [-1 to 1]
-	double		ray_dir_x; //ray direction
-	double		ray_dir_y;
-	double		side_dist_x; //distance to next vertical line
-	double		side_dist_y; //distance to next horizontal line
-	double		delta_dist_x; //distance between vertical lines
-	double		delta_dist_y; //distance between horizontal lines
-	double		perp_wall_dist; //util to calc ray length
-	mlx_image_t	*wall_img; //different for n s w e
-}	t_data;
-
-typedef struct s_textures
-{
-	mlx_texture_t	*wall_n;
-	mlx_texture_t	*wall_s;
-	mlx_texture_t	*wall_w;
-	mlx_texture_t	*wall_e;
-	mlx_image_t		*wall_n_img;
-	mlx_image_t		*wall_s_img;
-	mlx_image_t		*wall_w_img;
-	mlx_image_t		*wall_e_img;
-} t_textures;
-
-typedef struct    s_game
-{
-	mlx_t			*mlx;
-	mlx_image_t		*main_img;
-	t_data			data;
-	t_textures		textures;
-}	t_game;
 
 //helpers
 uint32_t	get_rgba(int r, int g, int b, int a);

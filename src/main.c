@@ -6,32 +6,33 @@
 /*   By: ccraciun <ccraciun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 09:54:18 by ccraciun          #+#    #+#             */
-/*   Updated: 2025/02/15 09:25:26 by ccraciun         ###   ########.fr       */
+/*   Updated: 2025/02/15 11:41:26 by erybolov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
-void prepare_and_load_textures(t_game *game)
+void prepare_game(t_game *game)
 {
+
     game->mlx = mlx_init(SCREEN_W, SCREEN_H, "cub3d", false);
     if (!game->mlx)
         print_mlx_error_and_exit();
 
     game->main_img = mlx_new_image(game->mlx, SCREEN_W, SCREEN_H);
     if (!game->main_img || (mlx_image_to_window(game->mlx, game->main_img, 0, 0) < 0))
-        print_mlx_error_and_exit();
+    	print_mlx_error_and_exit();
 
-    game->textures.wall_n = mlx_load_png("textures/wall_n.png");
+    game->textures.wall_n = mlx_load_png(game->map->north_png_path);
     if (!game->textures.wall_n)
         print_mlx_error_and_exit();
-    game->textures.wall_s = mlx_load_png("textures/wall_s.png");
+    game->textures.wall_s = mlx_load_png(game->map->south_png_path);
     if (!game->textures.wall_s)
         print_mlx_error_and_exit();
-    game->textures.wall_w = mlx_load_png("textures/wall_w.png");
+    game->textures.wall_w = mlx_load_png(game->map->west_png_path);
     if (!game->textures.wall_w)
         print_mlx_error_and_exit();
-    game->textures.wall_e = mlx_load_png("textures/wall_e.png");
+    game->textures.wall_e = mlx_load_png(game->map->east_png_path);
     if (!game->textures.wall_e)
         print_mlx_error_and_exit();
 
@@ -49,19 +50,19 @@ void prepare_and_load_textures(t_game *game)
         print_mlx_error_and_exit();
 
 
-    int map[MAP_H][MAP_W] = {
-        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-        {1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-        {1, 0, 0, 0, 1, 0, 1, 1, 0, 1},
-        {1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-        {1, 1, 1, 1, 0, 1, 1, 1, 1, 1},
-        {1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-        {1, 0, 1, 1, 1, 1, 1, 1, 0, 1},
-        {1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-        {1, 0, 1, 0, 0, 0, 0, 1, 0, 1},
-        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
-    };
-    memcpy(game->data.map, map, sizeof(map));
+    // int map[MAP_H][MAP_W] = {
+    //     {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+    //     {1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+    //     {1, 0, 0, 0, 1, 0, 1, 1, 0, 1},
+    //     {1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+    //     {1, 1, 1, 1, 0, 1, 1, 1, 1, 1},
+    //     {1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+    //     {1, 0, 1, 1, 1, 1, 1, 1, 0, 1},
+    //     {1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+    //     {1, 0, 1, 0, 0, 0, 0, 1, 0, 1},
+    //     {1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
+    // };
+    // memcpy(game->data.map, map, sizeof(map));
 
 
     game->data.pos_x = 2;
@@ -74,20 +75,26 @@ void prepare_and_load_textures(t_game *game)
 
 int	main(void)
 {
-	t_map	*map;
 	t_game	*game;
 
 	game = ft_calloc(1, sizeof(t_game));
-	map = ft_calloc(1, sizeof(t_map));
-	if(parse_map_file("assets/maps/simple_valid.cub", map))
-		valid_map(map);
+	if (!game)
+		return EXIT_FAILURE;
+	game->map = ft_calloc(1, sizeof(t_map));
+	if (!game->map)
+		return EXIT_FAILURE;
+	if(!parse_map_file("assets/maps/simple_valid.cub", game->map))
+		return EXIT_FAILURE; //TODO print something?
+	if (!valid_map(game->map))
+		return EXIT_FAILURE;
 	// printf("%c\n",map->player_dir);
-	game->mlx = mlx_init(640,640,"Test",true);
-	mlx_key_hook(game->mlx, &ft_keyhooks, &game);
+	prepare_game(game); //TODO continue map parsing into game struct
+	mlx_key_hook(game->mlx, &key_callback, game);
+	mlx_loop_hook(game->mlx, game_loop, game);
 	mlx_loop(game->mlx);
-	mlx_terminate(game->mlx);
-	free_map(map);
-	return (0);
+	cleanup_and_terminate_mlx(game);
+	free_map(game->map); //TODO move into cleanup
+	return EXIT_SUCCESS;
 }
 
 /*
