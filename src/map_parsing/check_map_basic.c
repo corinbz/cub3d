@@ -6,7 +6,7 @@
 /*   By: ccraciun <ccraciun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 11:43:57 by corin             #+#    #+#             */
-/*   Updated: 2025/01/22 14:08:13 by ccraciun         ###   ########.fr       */
+/*   Updated: 2025/02/15 09:22:25 by ccraciun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ bool	check_sides(char *row)
 	return (true);
 }
 
-static bool	look_for_player(char **array)
+static bool	look_for_player(t_map *map)
 {
 	int	i;
 	int	j;
@@ -67,20 +67,21 @@ static bool	look_for_player(char **array)
 	i = 0;
 	j = 0;
 	count = 0;
-	while (array[i])
+	while (map->cell_value[i])
 	{
-		while (array[i][j])
+		while (map->cell_value[i][j])
 		{
-			if (ft_strchr("NSWE", array[i][j]))
+			if (ft_strchr("NSWE", map->cell_value[i][j]))
+			{
+				map->player_dir = map->cell_value[i][j];
 				count++;
+			}
 			j++;
 		}
 		j = 0;
 		i++;
 	}
-	if (count != 1)
-		return (false);
-	return (true);
+	return (count == 1);
 }
 
 bool	valid_map(t_map *map)
@@ -90,7 +91,7 @@ bool	valid_map(t_map *map)
 
 	map_array = map->cell_value;
 	max_rows = count_rows(map_array);
-	if (!look_for_player(map_array))
+	if (!look_for_player(map))
 		return (dsp_err("Player not found or too many players\n"));
 	if (!check_space_neighbours(map_array))
 		return (false);
