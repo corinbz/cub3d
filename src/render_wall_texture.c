@@ -26,19 +26,19 @@ void render_wall_texture(const t_game *game, int x)
 	else
 		wall_x = game->data.pos_x + game->data.perp_wall_dist * game->data.ray_dir_x;
 	wall_x -= floor(wall_x);
-	tex_x = (int)(wall_x * (double)WALL_IMG_W);
+	tex_x = (int)(wall_x * (double)WALL_W);
 	if (game->data.side == 0 && game->data.ray_dir_x > 0)
-		tex_x = WALL_IMG_W - tex_x - 1;
+		tex_x = WALL_W - tex_x - 1;
 	if (game->data.side == 1 && game->data.ray_dir_y < 0)
-		tex_x = WALL_IMG_W - tex_x - 1;
-	wall_player_ratio = 1.0 * WALL_IMG_H / game->data.line_height;
+		tex_x = WALL_W - tex_x - 1;
+	wall_player_ratio = 1.0 * WALL_H / game->data.line_height;
 	tex_pos = (game->data.draw_start - SCREEN_H / 2 + game->data.line_height / 2) * wall_player_ratio;
 	y = game->data.draw_start;
 	while (y <= game->data.draw_end)
 	{
-		int tex_y = (int)tex_pos & (WALL_IMG_H - 1);
+		int tex_y = (int)tex_pos & (WALL_H - 1);
 		tex_pos += wall_player_ratio;
-		pixel = &game->data.wall_img->pixels[(tex_y * WALL_IMG_W + tex_x) * 4];
+		pixel = &game->data.wall_img->pixels[(tex_y * WALL_W + tex_x) * 4];
 		mlx_put_pixel(game->main_img, x, y, get_rgba(pixel[0], pixel[1], pixel[2], pixel[3]));
 		y++;
 	}

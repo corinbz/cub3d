@@ -27,8 +27,8 @@
 #define SCREEN_H 600
 #define MAP_W 10
 #define MAP_H 10
-#define WALL_IMG_W 64
-#define WALL_IMG_H 64
+#define WALL_W 64
+#define WALL_H 64
 
 #ifndef BUFFER_SIZE
 #define BUFFER_SIZE 10

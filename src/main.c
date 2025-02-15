@@ -6,7 +6,7 @@
 /*   By: ccraciun <ccraciun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 09:54:18 by ccraciun          #+#    #+#             */
-/*   Updated: 2025/02/15 11:54:53 by erybolov         ###   ########.fr       */
+/*   Updated: 2025/02/15 12:34:31 by erybolov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,16 +37,16 @@ void prepare_game(t_game *game)
         print_mlx_error_and_exit();
 
     game->textures.wall_n_img = mlx_texture_to_image(game->mlx, game->textures.wall_n);
-    if (!game->textures.wall_n_img)
+    if (!game->textures.wall_n_img && !mlx_resize_image(game->textures.wall_n_img, WALL_W, WALL_H))
         print_mlx_error_and_exit();
     game->textures.wall_s_img = mlx_texture_to_image(game->mlx, game->textures.wall_s);
-    if (!game->textures.wall_s_img)
+    if (!game->textures.wall_s_img && !mlx_resize_image(game->textures.wall_s_img, WALL_W, WALL_H))
         print_mlx_error_and_exit();
     game->textures.wall_w_img = mlx_texture_to_image(game->mlx, game->textures.wall_w);
-    if (!game->textures.wall_w_img)
+    if (!game->textures.wall_w_img && !mlx_resize_image(game->textures.wall_w_img, WALL_W, WALL_H))
         print_mlx_error_and_exit();
     game->textures.wall_e_img = mlx_texture_to_image(game->mlx, game->textures.wall_e);
-    if (!game->textures.wall_e_img)
+    if (!game->textures.wall_e_img && !mlx_resize_image(game->textures.wall_e_img, WALL_W, WALL_H))
         print_mlx_error_and_exit();
 
 
