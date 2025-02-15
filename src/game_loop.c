@@ -6,7 +6,7 @@
 /*   By: erybolov <erybolov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 09:24:17 by erybolov          #+#    #+#             */
-/*   Updated: 2025/02/15 09:31:26 by erybolov         ###   ########.fr       */
+/*   Updated: 2025/02/15 11:56:42 by erybolov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void draw_ceiling(const t_game *game)
         x = 0;
         while (x < SCREEN_W)
         {
-            mlx_put_pixel(game->main_img, x, y, get_rgba(100, 100, 255, 255));
+            mlx_put_pixel(game->main_img, x, y, get_rgba(game->map->ceiling_color[0], game->map->ceiling_color[1], game->map->ceiling_color[2], 255));
             x++;
         }
         y++;
@@ -41,7 +41,7 @@ void draw_floor(const t_game *game)
         x = 0;
         while (x < SCREEN_W)
         {
-            mlx_put_pixel(game->main_img, x, y, get_rgba(100, 255, 100, 255));
+            mlx_put_pixel(game->main_img, x, y, get_rgba(game->map->floor_color[0], game->map->floor_color[1], game->map->floor_color[2], 255));
             x++;
         }
         y++;
