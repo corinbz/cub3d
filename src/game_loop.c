@@ -6,7 +6,7 @@
 /*   By: erybolov <erybolov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 09:24:17 by erybolov          #+#    #+#             */
-/*   Updated: 2025/02/15 11:56:42 by erybolov         ###   ########.fr       */
+/*   Updated: 2025/02/15 13:16:42 by erybolov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,16 +63,16 @@ void game_loop(void *param)
     rot_speed = game->mlx->delta_time * 3.0;
     if (mlx_is_key_down(game->mlx, MLX_KEY_W))
     {
-        if (game->data.map[(int)(game->data.pos_x + game->data.dir_x * move_speed)][(int)game->data.pos_y] == 0)
+        if (game->map->cell_value[(int)(game->data.pos_x + game->data.dir_x * move_speed)][(int)game->data.pos_y] == '0')
             game->data.pos_x += game->data.dir_x * move_speed;
-        if (game->data.map[(int)game->data.pos_x][(int)(game->data.pos_y + game->data.dir_y * move_speed)] == 0)
+        if (game->map->cell_value[(int)game->data.pos_x][(int)(game->data.pos_y + game->data.dir_y * move_speed)] == '0')
             game->data.pos_y += game->data.dir_y * move_speed;
     }
     if (mlx_is_key_down(game->mlx, MLX_KEY_S))
     {
-        if (game->data.map[(int)(game->data.pos_x - game->data.dir_x * move_speed)][(int)game->data.pos_y] == 0)
+        if (game->map->cell_value[(int)(game->data.pos_x - game->data.dir_x * move_speed)][(int)game->data.pos_y] == '0')
             game->data.pos_x -= game->data.dir_x * move_speed;
-        if (game->data.map[(int)game->data.pos_x][(int)(game->data.pos_y - game->data.dir_y * move_speed)] == 0)
+        if (game->map->cell_value[(int)game->data.pos_x][(int)(game->data.pos_y - game->data.dir_y * move_speed)] == '0')
             game->data.pos_y -= game->data.dir_y * move_speed;
     }
     if (mlx_is_key_down(game->mlx, MLX_KEY_D))
@@ -147,7 +147,7 @@ void game_loop(void *param)
                 game->data.map_y += game->data.step_y;
                 game->data.side = 1;
             }
-            if (game->data.map[game->data.map_x][game->data.map_y] > 0)
+            if (game->map->cell_value[game->data.map_x][game->data.map_y] != '0')
                 game->data.hit = true;
         }
         if (game->data.side == 0)
