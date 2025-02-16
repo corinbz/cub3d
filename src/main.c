@@ -6,7 +6,7 @@
 /*   By: ccraciun <ccraciun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 09:54:18 by ccraciun          #+#    #+#             */
-/*   Updated: 2025/02/16 13:43:34 by ccraciun         ###   ########.fr       */
+/*   Updated: 2025/02/16 14:53:54 by ccraciun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,6 +137,7 @@ int	main(int ac, char **av)
 		return (free_map(game->map), free(game), EXIT_FAILURE);
 	prepare_game(game); //TODO continue map parsing into game struct
 	mlx_key_hook(game->mlx, &key_callback, game);
+	mlx_cursor_hook(game->mlx, &mouse_handler, NULL);
 	mlx_loop_hook(game->mlx, game_loop, game);
 	mlx_loop(game->mlx);
 	cleanup_and_terminate_mlx(game);

@@ -6,7 +6,7 @@
 /*   By: ccraciun <ccraciun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 09:45:41 by ccraciun          #+#    #+#             */
-/*   Updated: 2025/02/16 14:25:31 by ccraciun         ###   ########.fr       */
+/*   Updated: 2025/02/16 14:53:47 by ccraciun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,6 +173,7 @@ void		cleanup_and_terminate_mlx(t_game *game);
 
 //callbacks
 void		key_callback(mlx_key_data_t keydata, void* param);
+void mouse_handler(double xpos, double ypos, void* param);
 
 //game loop and render
 void		game_loop(void *param);
