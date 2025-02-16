@@ -6,7 +6,7 @@
 /*   By: ccraciun <ccraciun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 09:54:18 by ccraciun          #+#    #+#             */
-/*   Updated: 2025/02/16 11:39:23 by erybolov         ###   ########.fr       */
+/*   Updated: 2025/02/16 11:56:54 by ccraciun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,8 @@ void prepare_game(t_game *game)
     // memcpy(game->data.map, map, sizeof(map));
 
 
-    game->data.pos_x = 20;
-    game->data.pos_y = 4;
+    game->data.pos_x = game->map->player_x;
+    game->data.pos_y = game->map->player_y;
 	game->map->cell_value[(int)game->data.pos_y][(int)game->data.pos_x] = '0';
     game->data.dir_x = -1;
     game->data.dir_y = 0;
@@ -74,17 +74,38 @@ void prepare_game(t_game *game)
     game->data.plane_y = 0.66;
 }
 
-int	main(void)
+static void	check_input(int ac, char **av)
+{
+	int	map_len;
+	
+	if(ac != 2)
+	{
+		dsp_err("Please provide a valid map path\n");
+		exit(1);
+	}
+	map_len = ft_strlen(av[1]);
+	if (ft_strncmp(av[1] + map_len - 4, ".cub", 4))
+	{
+		dsp_err("Please provide a valid map path\n");
+		exit(1);
+	}
+}
+int	main(int ac, char **av)
 {
 	t_game	*game;
+	char	*map_path;
 
+	check_input(ac, av);
+	map_path = join_strs("assets/maps/", av[1]);
+	if (!map_path)
+		return(dsp_err("malloc failed on join_strs in main\n"));
 	game = ft_calloc(1, sizeof(t_game));
 	if (!game)
 		return EXIT_FAILURE;
 	game->map = ft_calloc(1, sizeof(t_map));
 	if (!game->map)
 		return EXIT_FAILURE;
-	if(!parse_map_file("assets/maps/simple_valid.cub", game->map))
+	if(!parse_map_file(map_path, game->map))
 		return EXIT_FAILURE; //TODO print something?
 	if (!valid_map(game->map))
 		return EXIT_FAILURE;

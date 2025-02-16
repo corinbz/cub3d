@@ -6,7 +6,7 @@
 /*   By: ccraciun <ccraciun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 09:45:41 by ccraciun          #+#    #+#             */
-/*   Updated: 2025/02/15 10:59:14 by erybolov         ###   ########.fr       */
+/*   Updated: 2025/02/16 11:50:35 by ccraciun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ typedef struct s_map
 	int		ceiling_color[3];
 	bool	ceiling_color_filled;
 	char	player_dir;
+	double	player_x;
+	double	player_y;
 }	t_map;
 
 typedef struct s_player_pos

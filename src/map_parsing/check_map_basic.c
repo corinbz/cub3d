@@ -6,7 +6,7 @@
 /*   By: ccraciun <ccraciun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 11:43:57 by corin             #+#    #+#             */
-/*   Updated: 2025/02/15 11:33:12 by erybolov         ###   ########.fr       */
+/*   Updated: 2025/02/16 11:52:02 by ccraciun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ static bool	look_for_player(t_map *map)
 			if (ft_strchr("NSWE", map->cell_value[i][j]))
 			{
 				map->player_dir = map->cell_value[i][j];
+				map->player_x = j;
+				map->player_y = i;
 				count++;
 			}
 			j++;
