@@ -6,7 +6,7 @@
 /*   By: ccraciun <ccraciun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 10:35:54 by corin             #+#    #+#             */
-/*   Updated: 2025/02/15 12:57:32 by ccraciun         ###   ########.fr       */
+/*   Updated: 2025/02/16 10:41:39 by ccraciun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,21 +88,21 @@ void	count_file_lines(int fd, t_map *map)
 	close(fd);
 }
 
-static bool	handle_parsing(char *line, t_map *map, int *line_no)
+static bool	handle_parsing(int fd, char *line, t_map *map, int *line_no)
 {
 	if (!parse_map(line, map, line_no))
 	{
-		free(line);
+		handle_failed_map_ln(fd, line);
 		return (false);
 	}
 	if (!parse_paths(line, map))
 	{
-		free(line);
+		handle_failed_map_ln(fd, line);
 		return (false);
 	}
 	if (!parse_colors(line, map))
 	{
-		free(line);
+		handle_failed_map_ln(fd, line);
 		return (false);
 	}
 	return (true);
@@ -128,7 +128,7 @@ bool	parse_map_file(char *path, t_map *map)
 	line = get_next_line(fd, false);
 	while (line)
 	{
-		if (!handle_parsing(line, map, &line_no))
+		if (!handle_parsing(fd, line, map, &line_no))
 			return (close(fd), false);
 		free(line);
 		line = get_next_line(fd, false);

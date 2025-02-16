@@ -6,7 +6,7 @@
 /*   By: ccraciun <ccraciun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 11:43:57 by corin             #+#    #+#             */
-/*   Updated: 2025/02/16 10:30:47 by ccraciun         ###   ########.fr       */
+/*   Updated: 2025/02/16 10:42:45 by ccraciun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ static bool	look_for_player(t_map *map)
 			{
 				map->player_dir = map->cell_value[i][j];
 				map->player_x = j;
-				map->player_y = j;
+				map->player_y = i;
 				count++;
 			}
 			j++;
