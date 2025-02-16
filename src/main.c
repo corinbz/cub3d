@@ -6,7 +6,7 @@
 /*   By: ccraciun <ccraciun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 09:54:18 by ccraciun          #+#    #+#             */
-/*   Updated: 2025/02/16 14:53:54 by ccraciun         ###   ########.fr       */
+/*   Updated: 2025/02/16 15:40:23 by ccraciun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void prepare_game(t_game *game)
     game->mlx = mlx_init(SCREEN_W, SCREEN_H, "cub3d", false);
     if (!game->mlx)
         print_mlx_error_and_exit();
+	mlx_set_cursor_mode(game->mlx, MLX_MOUSE_HIDDEN);
 
     game->main_img = mlx_new_image(game->mlx, SCREEN_W, SCREEN_H);
     if (!game->main_img || (mlx_image_to_window(game->mlx, game->main_img, 0, 0) < 0))
@@ -137,7 +138,7 @@ int	main(int ac, char **av)
 		return (free_map(game->map), free(game), EXIT_FAILURE);
 	prepare_game(game); //TODO continue map parsing into game struct
 	mlx_key_hook(game->mlx, &key_callback, game);
-	mlx_cursor_hook(game->mlx, &mouse_handler, NULL);
+	mlx_cursor_hook(game->mlx, &mouse_handler, game);
 	mlx_loop_hook(game->mlx, game_loop, game);
 	mlx_loop(game->mlx);
 	cleanup_and_terminate_mlx(game);

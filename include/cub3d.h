@@ -6,7 +6,7 @@
 /*   By: ccraciun <ccraciun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 09:45:41 by ccraciun          #+#    #+#             */
-/*   Updated: 2025/02/16 14:53:47 by ccraciun         ###   ########.fr       */
+/*   Updated: 2025/02/16 15:08:38 by ccraciun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,8 @@ typedef struct s_data
 	double		delta_dist_x; //distance between vertical lines
 	double		delta_dist_y; //distance between horizontal lines
 	double		perp_wall_dist; //util to calc ray length
+	double		mouse_x;
+	double		mouse_y;
 	mlx_image_t	*wall_img; //different for n s w e
 }	t_data;
 

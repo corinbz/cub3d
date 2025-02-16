@@ -6,7 +6,7 @@
 /*   By: ccraciun <ccraciun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 09:24:17 by erybolov          #+#    #+#             */
-/*   Updated: 2025/02/16 14:32:23 by ccraciun         ###   ########.fr       */
+/*   Updated: 2025/02/16 15:35:30 by ccraciun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void game_loop(void *param)
     game = (t_game *)param;
     x = 0;
     move_speed = game->mlx->delta_time * 5.0;
-    rot_speed = game->mlx->delta_time * 3.0;
+    rot_speed = game->mlx->delta_time * 2.0;
     if (mlx_is_key_down(game->mlx, MLX_KEY_W))
     {
         if (game->map->cell_value[(int)game->data.pos_y][(int)(game->data.pos_x + game->data.dir_x * move_speed)] == '0')
@@ -75,7 +75,7 @@ void game_loop(void *param)
         if (game->map->cell_value[(int)(game->data.pos_y - game->data.dir_y * move_speed)][(int)game->data.pos_x] == '0')
             game->data.pos_y -= game->data.dir_y * move_speed;
     }
-    if (mlx_is_key_down(game->mlx, MLX_KEY_D))
+    if (mlx_is_key_down(game->mlx, MLX_KEY_D) || game->data.mouse_x > SCREEN_W - (SCREEN_W / 4))
     {
         old_dir_x = game->data.dir_x;
         game->data.dir_x = game->data.dir_x * cos(-rot_speed) - game->data.dir_y * sin(-rot_speed);
@@ -84,7 +84,7 @@ void game_loop(void *param)
         game->data.plane_x = game->data.plane_x * cos(-rot_speed) - game->data.plane_y * sin(-rot_speed);
         game->data.plane_y = old_plane_x * sin(-rot_speed) + game->data.plane_y * cos(-rot_speed);
     }
-    if (mlx_is_key_down(game->mlx, MLX_KEY_A))
+    if (mlx_is_key_down(game->mlx, MLX_KEY_A) || game->data.mouse_x < (SCREEN_W / 4))
     {
         old_dir_x = game->data.dir_x;
         game->data.dir_x = game->data.dir_x * cos(rot_speed) - game->data.dir_y * sin(rot_speed);
