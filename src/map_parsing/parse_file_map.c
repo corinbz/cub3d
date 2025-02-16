@@ -6,7 +6,7 @@
 /*   By: ccraciun <ccraciun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 10:35:54 by corin             #+#    #+#             */
-/*   Updated: 2025/02/16 13:56:30 by ccraciun         ###   ########.fr       */
+/*   Updated: 2025/02/16 14:25:16 by ccraciun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,35 +56,6 @@ static bool	handle_failed_map_ln(int fd, char *line)
 	free(line);
 	close(fd);
 	return (false);
-}
-
-static bool	check_map_complete(t_map *map)
-{
-	if (!map->ceiling_color_filled || !map->floor_color_filled
-		|| !map->north_png_path || !map->south_png_path
-		|| !map->west_png_path || !map->east_png_path
-		|| !map->cell_value[0])
-	{
-		return (dsp_err("map file is not complete\n"));
-	}
-	return (true);
-}
-
-void	count_file_lines(int fd, t_map *map)
-{
-	char	*line;
-	int		res;
-
-	res = 0;
-	line = get_next_line(fd, false);
-	while(line)
-	{
-		free(line);
-		line = get_next_line(fd, false);
-		res++;
-	}
-	map->total_ln = res;
-	close(fd);
 }
 
 static bool	handle_parsing(int fd, char *line, t_map *map, int *line_no)

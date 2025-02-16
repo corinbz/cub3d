@@ -6,7 +6,7 @@
 /*   By: ccraciun <ccraciun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 09:45:41 by ccraciun          #+#    #+#             */
-/*   Updated: 2025/02/16 13:54:16 by ccraciun         ###   ########.fr       */
+/*   Updated: 2025/02/16 14:25:31 by ccraciun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,6 +155,8 @@ bool	validate_rows(char **map_array, int max_rows);
 
 //utils_files.c
 bool	file_exists_open(const char *filename);
+void	count_file_lines(int fd, t_map *map);
+bool	check_map_complete(t_map *map);
 
 //parse_colors.c
 bool parse_colors(char *line, t_map *map);
