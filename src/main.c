@@ -6,7 +6,7 @@
 /*   By: ccraciun <ccraciun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 09:54:18 by ccraciun          #+#    #+#             */
-/*   Updated: 2025/02/16 10:22:07 by ccraciun         ###   ########.fr       */
+/*   Updated: 2025/02/16 10:25:52 by ccraciun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void prepare_game(t_game *game)
     game->data.plane_y = 0.66;
 }
 
-int	main(void)
+int	main(int ac, char **av)
 {
 	t_game	*game;
 	char	*map_path;
