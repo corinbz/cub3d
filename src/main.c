@@ -6,7 +6,7 @@
 /*   By: ccraciun <ccraciun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 09:54:18 by ccraciun          #+#    #+#             */
-/*   Updated: 2025/02/16 10:25:52 by ccraciun         ###   ########.fr       */
+/*   Updated: 2025/02/16 10:35:59 by ccraciun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,23 @@ void prepare_game(t_game *game)
     game->data.dir_y = 0;
     game->data.plane_x = 0;
     game->data.plane_y = 0.66;
+}
+
+static void	check_input(int ac, char **av)
+{
+	int	map_len;
+	
+	if(ac != 2)
+	{
+		dsp_err("Please provide a valid map path\n");
+		exit(1);
+	}
+	map_len = ft_strlen(av[1]);
+	if (ft_strncmp(av[1] + map_len - 4, ".cub", 4))
+	{
+		dsp_err("Please provide a valid map path\n");
+		exit(1);
+	}
 }
 
 int	main(int ac, char **av)
