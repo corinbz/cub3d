@@ -6,7 +6,7 @@
 /*   By: ccraciun <ccraciun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 09:54:18 by ccraciun          #+#    #+#             */
-/*   Updated: 2025/02/16 11:56:54 by ccraciun         ###   ########.fr       */
+/*   Updated: 2025/02/16 12:15:09 by erybolov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,11 +67,40 @@ void prepare_game(t_game *game)
 
     game->data.pos_x = game->map->player_x;
     game->data.pos_y = game->map->player_y;
+
+	if (game->map->cell_value[(int)game->data.pos_y][(int)game->data.pos_x] == 'W')
+	{
+		game->data.dir_x = -1;
+		game->data.dir_y = 0;
+		game->data.plane_x = 0;
+		game->data.plane_y = 0.66;
+	}
+
+	if (game->map->cell_value[(int)game->data.pos_y][(int)game->data.pos_x] == 'E')
+	{
+		game->data.dir_x = 1;
+		game->data.dir_y = 0;
+		game->data.plane_x = 0;
+		game->data.plane_y = -0.66;
+	}
+
+	if (game->map->cell_value[(int)game->data.pos_y][(int)game->data.pos_x] == 'S')
+	{
+		game->data.dir_x = 0;
+		game->data.dir_y = 1;
+		game->data.plane_x = 0.66;
+		game->data.plane_y = 0;
+	}
+
+	if (game->map->cell_value[(int)game->data.pos_y][(int)game->data.pos_x] == 'N')
+	{
+		game->data.dir_x = 0;
+		game->data.dir_y = -1;
+		game->data.plane_x = -0.66;
+		game->data.plane_y = 0;
+	}
+
 	game->map->cell_value[(int)game->data.pos_y][(int)game->data.pos_x] = '0';
-    game->data.dir_x = -1;
-    game->data.dir_y = 0;
-    game->data.plane_x = 0;
-    game->data.plane_y = 0.66;
 }
 
 static void	check_input(int ac, char **av)
