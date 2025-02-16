@@ -1,5 +1,5 @@
 NAME    = cub3d
-CFLAGS  = -Wextra -Wall -Wextra -Wunreachable-code -g #-Ofast
+CFLAGS  = -Wextra -Wall -Wextra -Wunreachable-code -g #-fsanitize=address #-Ofast
 
 #MLX STUFF
 LIBMLX	= ./MLX42

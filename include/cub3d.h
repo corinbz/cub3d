@@ -6,7 +6,7 @@
 /*   By: ccraciun <ccraciun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 09:45:41 by ccraciun          #+#    #+#             */
-/*   Updated: 2025/02/16 12:38:42 by erybolov         ###   ########.fr       */
+/*   Updated: 2025/02/16 13:54:16 by ccraciun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ typedef struct s_map
 	char	player_dir;
 	double	player_x;
 	double	player_y;
+	int		total_ln;
 }	t_map;
 
 typedef struct s_data
@@ -166,7 +167,7 @@ bool parse_paths(char *line, t_map *map);
 //helpers
 uint32_t	get_rgba(int r, int g, int b, int a);
 void		print_mlx_error_and_exit(void);
-void		cleanup_and_terminate_mlx(const t_game *game);
+void		cleanup_and_terminate_mlx(t_game *game);
 
 //callbacks
 void		key_callback(mlx_key_data_t keydata, void* param);

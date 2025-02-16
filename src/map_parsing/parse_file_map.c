@@ -6,7 +6,7 @@
 /*   By: ccraciun <ccraciun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 10:35:54 by corin             #+#    #+#             */
-/*   Updated: 2025/01/22 14:08:36 by ccraciun         ###   ########.fr       */
+/*   Updated: 2025/02/16 13:56:30 by ccraciun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ static bool	handle_failed_map_ln(int fd, char *line)
 	free(line);
 	line = get_next_line(fd, true);
 	free(line);
+	close(fd);
 	return (false);
 }
 
@@ -69,6 +70,43 @@ static bool	check_map_complete(t_map *map)
 	return (true);
 }
 
+void	count_file_lines(int fd, t_map *map)
+{
+	char	*line;
+	int		res;
+
+	res = 0;
+	line = get_next_line(fd, false);
+	while(line)
+	{
+		free(line);
+		line = get_next_line(fd, false);
+		res++;
+	}
+	map->total_ln = res;
+	close(fd);
+}
+
+static bool	handle_parsing(int fd, char *line, t_map *map, int *line_no)
+{
+	if (!parse_map(line, map, line_no))
+	{
+		handle_failed_map_ln(fd, line);
+		return (false);
+	}
+	if (!parse_paths(line, map))
+	{
+		handle_failed_map_ln(fd, line);
+		return (false);
+	}
+	if (!parse_colors(line, map))
+	{
+		handle_failed_map_ln(fd, line);
+		return (false);
+	}
+	return (true);
+}
+
 bool	parse_map_file(char *path, t_map *map)
 {
 	int		fd;
@@ -79,20 +117,20 @@ bool	parse_map_file(char *path, t_map *map)
 	fd = open(path, O_RDONLY);
 	if (fd == -1)
 		return (dsp_err(FILE_NO_ACCES));
-	line = get_next_line(fd, false);
-	map->cell_value = ft_calloc(1024, sizeof(char *));
+	count_file_lines(fd, map);
+	fd = open(path, O_RDONLY);
+	if (fd == -1)
+		return (dsp_err(FILE_NO_ACCES));
+	map->cell_value = ft_calloc(map->total_ln, sizeof(char *));
 	if (!map->cell_value)
 		return (dsp_err("Alloc failed for map->cell_value\n"));
+	line = get_next_line(fd, false);
 	while (line)
 	{
-		if (!parse_map(line, map, &line_no))
-			return (handle_failed_map_ln(fd, line));
-		if (!parse_paths(line, map))
-			return (handle_failed_map_ln(fd, line));
-		if (!parse_colors(line, map))
-			return (free(line), false);
+		if (!handle_parsing(fd, line, map, &line_no))
+			return (close(fd), false);
 		free(line);
 		line = get_next_line(fd, false);
 	}
-	return (check_map_complete(map));
+	return (close(fd), check_map_complete(map));
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   helpers.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erybolov <erybolov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ccraciun <ccraciun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 06:50:42 by erybolov          #+#    #+#             */
-/*   Updated: 2025/02/14 06:54:14 by erybolov         ###   ########.fr       */
+/*   Updated: 2025/02/16 13:46:08 by ccraciun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,9 @@ void print_mlx_error_and_exit(void)
 	exit(EXIT_FAILURE);
 }
 
-void	cleanup_and_terminate_mlx(const t_game *game)
+void	cleanup_and_terminate_mlx(t_game *game)
 {
+	free_map(game->map);
 	mlx_delete_texture(game->textures.wall_n);
 	mlx_delete_texture(game->textures.wall_s);
 	mlx_delete_texture(game->textures.wall_w);
@@ -35,4 +36,5 @@ void	cleanup_and_terminate_mlx(const t_game *game)
 	mlx_delete_image(game->mlx, game->textures.wall_e_img);
 	mlx_delete_image(game->mlx, game->main_img);
 	mlx_terminate(game->mlx);
+	free(game);
 }
