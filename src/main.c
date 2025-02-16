@@ -6,7 +6,7 @@
 /*   By: ccraciun <ccraciun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 09:54:18 by ccraciun          #+#    #+#             */
-/*   Updated: 2025/02/15 13:17:23 by erybolov         ###   ########.fr       */
+/*   Updated: 2025/02/16 11:39:23 by erybolov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,9 @@ void prepare_game(t_game *game)
     // memcpy(game->data.map, map, sizeof(map));
 
 
-    game->data.pos_x = 2;
-    game->data.pos_y = 2;
+    game->data.pos_x = 20;
+    game->data.pos_y = 4;
+	game->map->cell_value[(int)game->data.pos_y][(int)game->data.pos_x] = '0';
     game->data.dir_x = -1;
     game->data.dir_y = 0;
     game->data.plane_x = 0;
