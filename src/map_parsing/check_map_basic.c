@@ -6,7 +6,7 @@
 /*   By: ccraciun <ccraciun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 11:43:57 by corin             #+#    #+#             */
-/*   Updated: 2025/02/15 09:22:25 by ccraciun         ###   ########.fr       */
+/*   Updated: 2025/02/15 11:33:12 by erybolov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,8 @@ bool	valid_map(t_map *map)
 	char	**map_array;
 	int		max_rows;
 
+	if (!map)
+		return (false);
 	map_array = map->cell_value;
 	max_rows = count_rows(map_array);
 	if (!look_for_player(map))
