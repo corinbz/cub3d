@@ -1,10 +1,10 @@
-NO ./assets/pngs/red_planks.png
-SO ./assets/pngs/spiral.png
-WE ./assets/pngs/wood.png
-EA ./assets/pngs/wood_wall.png
+NO ./assets/pngs/snow.png
+SO ./assets/pngs/desert.png
+WE ./assets/pngs/west.png
+EA ./assets/pngs/east.png
 
-F 220,100,0
-C 225,30,0
+F 92, 62, 36
+C 71, 76, 230
 
          111111111  111111111111111111
          100000001  100000000000000001
