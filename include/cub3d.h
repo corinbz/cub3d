@@ -6,7 +6,7 @@
 /*   By: ccraciun <ccraciun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 09:45:41 by ccraciun          #+#    #+#             */
-/*   Updated: 2025/02/16 11:50:35 by ccraciun         ###   ########.fr       */
+/*   Updated: 2025/02/16 12:38:42 by erybolov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,6 @@ typedef struct s_map
 	double	player_y;
 }	t_map;
 
-typedef struct s_player_pos
-{
-	size_t	x;
-	size_t	y;
-}	t_player_pos;
-
 typedef struct s_data
 {
 	int			map[MAP_H][MAP_W];
@@ -105,7 +99,6 @@ typedef struct s_textures
 typedef struct s_game
 {
 	mlx_t					*mlx;
-	t_player_pos			*player_pos;
 	t_map					*map;
 	mlx_image_t				*main_img;
 	t_data					data; //TODO use ptr?
