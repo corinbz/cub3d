@@ -6,7 +6,7 @@
 /*   By: ccraciun <ccraciun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 09:45:41 by ccraciun          #+#    #+#             */
-/*   Updated: 2025/02/18 09:39:45 by ccraciun         ###   ########.fr       */
+/*   Updated: 2025/02/18 11:29:58 by erybolov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ typedef struct s_map
 
 typedef struct s_data
 {
-	int			map[MAP_H][MAP_W];
 	int			map_x; //current player pos
 	int			map_y;
 	int			step_x; //direction to step
