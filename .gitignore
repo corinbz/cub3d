@@ -1,4 +1,9 @@
 cub3d
+.idea/
+.vscode/
+
+.vscode/*
+.idea/*
 
 # Object files
 *.o
