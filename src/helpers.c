@@ -6,7 +6,7 @@
 /*   By: ccraciun <ccraciun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 06:50:42 by erybolov          #+#    #+#             */
-/*   Updated: 2025/02/18 11:42:31 by erybolov         ###   ########.fr       */
+/*   Updated: 2025/02/18 11:52:42 by erybolov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ uint32_t	get_rgba(int r, int g, int b, int a)
 	return (r << 24 | g << 16 | b << 8 | a);
 }
 
-void print_mlx_error_clean_exit(t_game *game)
+void	print_mlx_error_clean_exit(t_game *game)
 {
 	printf("MLX error: %s\n", mlx_strerror(mlx_errno));
 	cleanup_and_terminate_mlx(game);
