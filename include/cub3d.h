@@ -6,7 +6,7 @@
 /*   By: ccraciun <ccraciun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 09:45:41 by ccraciun          #+#    #+#             */
-/*   Updated: 2025/02/18 12:02:49 by ccraciun         ###   ########.fr       */
+/*   Updated: 2025/02/18 12:18:47 by erybolov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,13 +174,16 @@ void		cleanup_and_terminate_mlx(t_game *game);
 
 //callbacks
 void		key_callback(mlx_key_data_t keydata, void* param);
-void mouse_handler(double xpos, double ypos, void* param);
+void		mouse_handler(double xpos, double ypos, void* param);
 
 //game loop and render
 void		game_loop(void *param);
 void		draw_floor(const t_game *game);
 void		draw_ceiling(const t_game *game);
 void		render_wall_texture(const t_game *game, int x);
+void		check_keys_w_s(t_game* g);
+void		check_keys_a_d(t_game* g);
+void		raycast(t_game* game);
 
 //prepare_game.c
 void	prepare_game(t_game *game);

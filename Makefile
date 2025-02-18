@@ -26,7 +26,8 @@ SRC_UTIL = src/utilities/errors.c \
 
 SRC_ROOT = src/game_loop.c \
 			src/helpers.c \
-			src/key_callback.c \
+			src/keys_handlers.c \
+			src/raycast.c \
 			src/main.c \
 			src/render_wall_texture.c \
 			src/prepare_game.c
