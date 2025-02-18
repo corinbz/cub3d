@@ -6,7 +6,7 @@
 /*   By: ccraciun <ccraciun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 09:45:41 by ccraciun          #+#    #+#             */
-/*   Updated: 2025/02/16 15:08:38 by ccraciun         ###   ########.fr       */
+/*   Updated: 2025/02/18 09:39:45 by ccraciun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@
 # include <stddef.h>
 # include "../MLX42/include/MLX42/MLX42.h"
 
-#define SCREEN_W 800
-#define SCREEN_H 600
+#define SCREEN_W 1440
+#define SCREEN_H 1080
 #define MAP_W 10
 #define MAP_H 10
 #define WALL_W 64
