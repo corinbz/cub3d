@@ -6,7 +6,7 @@
 /*   By: ccraciun <ccraciun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 09:54:18 by ccraciun          #+#    #+#             */
-/*   Updated: 2025/02/18 09:47:46 by ccraciun         ###   ########.fr       */
+/*   Updated: 2025/02/18 11:25:50 by erybolov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,9 @@ void prepare_game(t_game *game)
 		game->data.plane_x = 0.66;
 		game->data.plane_y = 0;
 	}
-
 	game->map->cell_value[(int)game->data.pos_y][(int)game->data.pos_x] = '0';
+	game->data.pos_y += 0.5;
+	game->data.pos_x += 0.5;
 }
 
 static void	check_input(int ac, char **av)
