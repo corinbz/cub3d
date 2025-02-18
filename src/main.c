@@ -6,7 +6,7 @@
 /*   By: ccraciun <ccraciun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 09:54:18 by ccraciun          #+#    #+#             */
-/*   Updated: 2025/02/18 11:25:50 by erybolov         ###   ########.fr       */
+/*   Updated: 2025/02/18 11:55:01 by ccraciun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,7 @@ void prepare_game(t_game *game)
 
 	game->mlx = mlx_init(SCREEN_W, SCREEN_H, "cub3d", false);
 	if (!game->mlx)
-		print_mlx_error_clean_exit(game);
-	// mlx_set_cursor_mode(game->mlx, MLX_CURSOR_CROSSHAIR);
-	// mlx_set_cursor(game->mlx, MLX_CURSOR_CROSSHAIR);
+		print_mlx_error_and_exit();
 	game->main_img = mlx_new_image(game->mlx, SCREEN_W, SCREEN_H);
 	if (!game->main_img || (mlx_image_to_window(game->mlx, game->main_img, 0, 0) < 0))
 		print_mlx_error_clean_exit(game);

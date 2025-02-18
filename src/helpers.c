@@ -6,7 +6,7 @@
 /*   By: ccraciun <ccraciun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 06:50:42 by erybolov          #+#    #+#             */
-/*   Updated: 2025/02/18 11:52:42 by erybolov         ###   ########.fr       */
+/*   Updated: 2025/02/18 11:55:56 by ccraciun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,3 +51,4 @@ void	cleanup_and_terminate_mlx(t_game *game)
 	if (game)
 		free(game);
 }
+
