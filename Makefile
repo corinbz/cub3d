@@ -28,7 +28,8 @@ SRC_ROOT = src/game_loop.c \
 			src/helpers.c \
 			src/key_callback.c \
 			src/main.c \
-			src/render_wall_texture.c
+			src/render_wall_texture.c \
+			src/prepare_game.c
 
 SRCS    = $(SRC_MAP) \
 			$(SRC_UTIL) \

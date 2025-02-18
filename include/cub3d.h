@@ -6,7 +6,7 @@
 /*   By: ccraciun <ccraciun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 09:45:41 by ccraciun          #+#    #+#             */
-/*   Updated: 2025/02/18 11:42:46 by erybolov         ###   ########.fr       */
+/*   Updated: 2025/02/18 12:02:49 by ccraciun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,4 +182,6 @@ void		draw_floor(const t_game *game);
 void		draw_ceiling(const t_game *game);
 void		render_wall_texture(const t_game *game, int x);
 
+//prepare_game.c
+void	prepare_game(t_game *game);
 #endif
