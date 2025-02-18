@@ -6,7 +6,7 @@
 /*   By: ccraciun <ccraciun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 12:01:50 by ccraciun          #+#    #+#             */
-/*   Updated: 2025/02/18 12:23:13 by ccraciun         ###   ########.fr       */
+/*   Updated: 2025/02/18 12:40:08 by ccraciun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,4 +103,5 @@ void	prepare_game(t_game *game)
 	game->map->cell_value[(int)game->data.pos_y][(int)game->data.pos_x] = '0';
 	game->data.pos_y += 0.5;
 	game->data.pos_x += 0.5;
+	game->data.mouse_x = SCREEN_W / 2;
 }

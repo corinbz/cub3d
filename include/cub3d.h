@@ -6,7 +6,7 @@
 /*   By: ccraciun <ccraciun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 09:45:41 by ccraciun          #+#    #+#             */
-/*   Updated: 2025/02/18 12:18:47 by erybolov         ###   ########.fr       */
+/*   Updated: 2025/02/18 12:46:38 by ccraciun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,13 @@
 # include <stddef.h>
 # include "../MLX42/include/MLX42/MLX42.h"
 
-#define SCREEN_W 1440
-#define SCREEN_H 1080
-#define MAP_W 10
-#define MAP_H 10
-#define WALL_W 64
-#define WALL_H 64
+# define SCREEN_W 1440
+# define SCREEN_H 1080
+# define WALL_W 64
+# define WALL_H 64
+# define BUFFER_SIZE 10
 
-#ifndef BUFFER_SIZE
-#define BUFFER_SIZE 10
-#endif
-
-#define FILE_NO_ACCES "File could not be opened"
+# define FILE_NO_ACCES "File could not be opened"
 
 //STRUCTS
 
@@ -45,7 +40,6 @@ typedef struct s_map
 	char	*west_png_path;
 	char	*east_png_path;
 	char	**cell_value;
-	bool	valid;
 	int		floor_color[3];
 	bool	floor_color_filled;
 	int		ceiling_color[3];
@@ -96,7 +90,7 @@ typedef struct s_textures
 	mlx_image_t		*wall_s_img;
 	mlx_image_t		*wall_w_img;
 	mlx_image_t		*wall_e_img;
-} t_textures;
+}	t_textures;
 
 typedef struct s_game
 {
@@ -110,62 +104,59 @@ typedef struct s_game
 //FUNCTIONS
 
 //errors.c
-void	mlx_error(void);
-bool	dsp_err(char *err);
+bool		dsp_err(char *err);
 
 //utils
-char	*get_next_line(int fd, bool clean);
-void	ft_free_all(char **str1, char **str2, char **str3);
-int		contains_newline(const char *s);
-char	*join_strs(const char *s1, const char *s2);
-char	*ft_strdup(const char *str);
+char		*get_next_line(int fd, bool clean);
+void		ft_free_all(char **str1, char **str2, char **str3);
+int			contains_newline(const char *s);
+char		*join_strs(const char *s1, const char *s2);
+char		*ft_strdup(const char *str);
 
 //utils_memory.c
-void	*ft_calloc(size_t num_elements, size_t element_size);
-void	ft_free_2d(char **arr);
+void		*ft_calloc(size_t num_elements, size_t element_size);
+void		ft_free_2d(char **arr);
 
 //utils_strings.c
-int		ft_strncmp(const char *s1, const char *s2, size_t n);
-void	strip_whitespace(char *str);
-int		ft_strlen(const char *str);
-size_t	ft_strlcpy(char *dst, const char *src, size_t size);
-int		ft_atoi(const char *str);
-char	*ft_strchr(const char *s, int c);
-int		ft_isspace(char c);
+int			ft_strncmp(const char *s1, const char *s2, size_t n);
+void		strip_whitespace(char *str);
+int			ft_strlen(const char *str);
+size_t		ft_strlcpy(char *dst, const char *src, size_t size);
+int			ft_atoi(const char *str);
+char		*ft_strchr(const char *s, int c);
+int			ft_isspace(char c);
 
 //split.c
-char	**ft_split(char const *s, char c);
+char		**ft_split(char const *s, char c);
 
 //free_structs.c
-void	free_map(t_map *map);
+void		free_map(t_map *map);
 
 //map_parsing.c
-bool	parse_map_file(char *path, t_map *map);
+bool		parse_map_file(char *path, t_map *map);
 
 //check_map_basic.c
-int		count_rows(char **cells);
-bool	check_f_or_l(char *row);
-bool	check_sides(char *row);
-bool	valid_map(t_map *map);
+int			count_rows(char **cells);
+bool		check_f_or_l(char *row);
+bool		check_sides(char *row);
+bool		valid_map(t_map *map);
 
 //check_map_space.c
-bool	check_space_neighbours(char **map);
+bool		check_space_neighbours(char **map);
 
 //check_map_lines.c
-bool	validate_rows(char **map_array, int max_rows);
+bool		validate_rows(char **map_array, int max_rows);
 
 //utils_files.c
-bool	file_exists_open(const char *filename);
-void	count_file_lines(int fd, t_map *map);
-bool	check_map_complete(t_map *map);
+bool		file_exists_open(const char *filename);
+void		count_file_lines(int fd, t_map *map);
+bool		check_map_complete(t_map *map);
 
 //parse_colors.c
-bool parse_colors(char *line, t_map *map);
+bool		parse_colors(char *line, t_map *map);
 
 //parse_img_paths
-bool parse_paths(char *line, t_map *map);
-
-
+bool		parse_paths(char *line, t_map *map);
 
 //helpers
 uint32_t	get_rgba(int r, int g, int b, int a);
@@ -173,18 +164,18 @@ void		print_mlx_error_clean_exit(t_game *game);
 void		cleanup_and_terminate_mlx(t_game *game);
 
 //callbacks
-void		key_callback(mlx_key_data_t keydata, void* param);
-void		mouse_handler(double xpos, double ypos, void* param);
+void		key_callback(mlx_key_data_t keydata, void *param);
+void		mouse_handler(double xpos, double ypos, void *param);
 
 //game loop and render
 void		game_loop(void *param);
 void		draw_floor(const t_game *game);
 void		draw_ceiling(const t_game *game);
 void		render_wall_texture(const t_game *game, int x);
-void		check_keys_w_s(t_game* g);
-void		check_keys_a_d(t_game* g);
-void		raycast(t_game* game);
+void		check_keys_w_s(t_game *g);
+void		check_keys_a_d(t_game *g);
+void		raycast(t_game *game);
 
 //prepare_game.c
-void	prepare_game(t_game *game);
+void		prepare_game(t_game *game);
 #endif
