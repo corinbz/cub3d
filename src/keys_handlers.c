@@ -6,7 +6,7 @@
 /*   By: erybolov <erybolov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 09:10:28 by erybolov          #+#    #+#             */
-/*   Updated: 2025/02/18 13:04:24 by erybolov         ###   ########.fr       */
+/*   Updated: 2025/02/18 13:24:06 by erybolov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,11 @@ void	check_keys_w_s(t_game *g)
 
 static void	check_key_d(t_game *g)
 {
+	double	rot_speed;
 	double	old_dir_x;
 	double	old_plane_x;
 
+	rot_speed = g->mlx->delta_time * 2.0;
 	if (mlx_is_key_down(g->mlx, MLX_KEY_A) || g->data.mouse_x < (SCREEN_W / 4))
 	{
 		old_dir_x = g->data.dir_x;
