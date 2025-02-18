@@ -6,7 +6,7 @@
 /*   By: ccraciun <ccraciun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 09:45:41 by ccraciun          #+#    #+#             */
-/*   Updated: 2025/02/18 11:29:58 by erybolov         ###   ########.fr       */
+/*   Updated: 2025/02/18 11:42:46 by erybolov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,7 +169,7 @@ bool parse_paths(char *line, t_map *map);
 
 //helpers
 uint32_t	get_rgba(int r, int g, int b, int a);
-void		print_mlx_error_and_exit(void);
+void		print_mlx_error_clean_exit(t_game *game);
 void		cleanup_and_terminate_mlx(t_game *game);
 
 //callbacks
