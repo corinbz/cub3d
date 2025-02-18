@@ -1,5 +1,5 @@
 NAME    = cub3d
-CFLAGS  = -Wextra -Wall -Wextra -Wunreachable-code -g #-fsanitize=address #-Ofast
+CFLAGS  = -Werror -Wall -Wextra -Wunreachable-code -g #-fsanitize=address #-Ofast
 
 #MLX STUFF
 LIBMLX	= ./MLX42
@@ -7,14 +7,35 @@ HEADERS	:= -I ./include -I $(LIBMLX)/include
 LIBS	:= $(LIBMLX)/build/libmlx42.a -ldl -lglfw -pthread -lm
 
 # Source directories
-SRC_DIRS = src src/utilities src/map_parsing
+SRC_MAP = src/map_parsing/check_map_basic.c \
+			src/map_parsing/check_map_lines.c \
+			src/map_parsing/check_map_space.c \
+			src/map_parsing/parse_colors.c \
+			src/map_parsing/parse_file_map.c \
+			src/map_parsing/parse_img_paths.c
 
-# Find all .c files in the source directories
-SRCS    = $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.c))
+SRC_UTIL = src/utilities/errors.c \
+			src/utilities/free_structs.c \
+			src/utilities/ft_split.c \
+			src/utilities/get_next_line_utils.c \
+			src/utilities/get_next_line.c \
+			src/utilities/utils_files.c \
+			src/utilities/utils_memory.c \
+			src/utilities/utils_strings.c \
+			src/utilities/utils_strings_2.c
 
-# Create object files in obj directory while maintaining directory structure
-OBJS    = $(patsubst src/%.c,obj/%.o,$(SRCS))
-OBJDIR  = ./obj
+SRC_ROOT = src/game_loop.c \
+			src/helpers.c \
+			src/key_callback.c \
+			src/main.c \
+			src/render_wall_texture.c
+
+SRCS    = $(SRC_MAP) \
+			$(SRC_UTIL) \
+			$(SRC_ROOT)
+
+OBJS    = $(SRCS:src/%.c=$(OBJDIR)/%.o)
+OBJDIR  = obj
 
 # Colors for prettier output
 GREEN=\033[1;32m
@@ -28,7 +49,6 @@ all: libmlx $(NAME)
 libmlx:
 	@cmake $(LIBMLX) -B $(LIBMLX)/build && make -C $(LIBMLX)/build -j4
 
-# Create object directories and compile
 $(OBJDIR)/%.o: src/%.c
 	@mkdir -p $(dir $@)
 	@$(CC) $(CFLAGS) -c $< -o $@ $(HEADERS)
