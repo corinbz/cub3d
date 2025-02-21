@@ -6,7 +6,7 @@
 /*   By: erybolov <erybolov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 09:10:28 by erybolov          #+#    #+#             */
-/*   Updated: 2025/02/21 22:11:34 by erybolov         ###   ########.fr       */
+/*   Updated: 2025/02/21 22:15:12 by erybolov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,8 @@ static void	check_key_r(t_game *g)
 	double	old_plane_x;
 
 	rot_speed = g->mlx->delta_time * 2.0;
-	if (mlx_is_key_down(g->mlx, MLX_KEY_LEFT) || g->data.mouse_x < (SCREEN_W / 4))
+	if (mlx_is_key_down(g->mlx, MLX_KEY_LEFT) || \
+	g->data.mouse_x < (SCREEN_W / 4))
 	{
 		old_dir_x = g->data.dir_x;
 		g->data.dir_x = g->data.dir_x * cos(rot_speed) - \
