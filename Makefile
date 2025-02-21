@@ -30,7 +30,8 @@ SRC_ROOT = src/game_loop.c \
 			src/raycast.c \
 			src/main.c \
 			src/render_wall_texture.c \
-			src/prepare_game.c
+			src/prepare_game.c \
+			src/mouse_handler.c
 
 SRCS    = $(SRC_MAP) \
 			$(SRC_UTIL) \
