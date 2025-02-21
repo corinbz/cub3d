@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccraciun <ccraciun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: erybolov <erybolov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 09:45:41 by ccraciun          #+#    #+#             */
-/*   Updated: 2025/02/18 12:46:38 by ccraciun         ###   ########.fr       */
+/*   Updated: 2025/02/21 21:49:20 by erybolov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,7 +173,7 @@ void		draw_floor(const t_game *game);
 void		draw_ceiling(const t_game *game);
 void		render_wall_texture(const t_game *game, int x);
 void		check_keys_w_s(t_game *g);
-void		check_keys_a_d(t_game *g);
+void		check_keys_l_r(t_game *g);
 void		raycast(t_game *game);
 
 //prepare_game.c

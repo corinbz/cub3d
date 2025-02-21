@@ -6,7 +6,7 @@
 /*   By: erybolov <erybolov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 09:10:28 by erybolov          #+#    #+#             */
-/*   Updated: 2025/02/18 13:24:06 by erybolov         ###   ########.fr       */
+/*   Updated: 2025/02/21 22:04:24 by erybolov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,16 +53,34 @@ void	check_keys_w_s(t_game *g)
 		move_speed)][(int)g->data.pos_x] == '0')
 			g->data.pos_y -= g->data.dir_y * move_speed;
 	}
+	if (mlx_is_key_down(g->mlx, MLX_KEY_A))
+	{
+		if (g->map->cell_value[(int)g->data.pos_y] \
+		[(int)(g->data.pos_x - g->data.plane_x * move_speed)] == '0')
+			g->data.pos_x -= g->data.plane_x * move_speed;
+		if (g->map->cell_value[(int)(g->data.pos_y - g->data.plane_y * \
+		move_speed)][(int)g->data.pos_x] == '0')
+			g->data.pos_y -= g->data.plane_y * move_speed;
+	}
+	if (mlx_is_key_down(g->mlx, MLX_KEY_D))
+	{
+		if (g->map->cell_value[(int)g->data.pos_y] \
+		[(int)(g->data.pos_x + g->data.plane_x * move_speed)] == '0')
+			g->data.pos_x += g->data.plane_x * move_speed;
+		if (g->map->cell_value[(int)(g->data.pos_y + g->data.plane_y * \
+		move_speed)][(int)g->data.pos_x] == '0')
+			g->data.pos_y += g->data.plane_y * move_speed;
+	}
 }
 
-static void	check_key_d(t_game *g)
+static void	check_key_r(t_game *g)
 {
 	double	rot_speed;
 	double	old_dir_x;
 	double	old_plane_x;
 
 	rot_speed = g->mlx->delta_time * 2.0;
-	if (mlx_is_key_down(g->mlx, MLX_KEY_A) || g->data.mouse_x < (SCREEN_W / 4))
+	if (mlx_is_key_down(g->mlx, MLX_KEY_LEFT) || g->data.mouse_x < (SCREEN_W / 4))
 	{
 		old_dir_x = g->data.dir_x;
 		g->data.dir_x = g->data.dir_x * cos(rot_speed) - \
@@ -77,14 +95,14 @@ static void	check_key_d(t_game *g)
 	}
 }
 
-void	check_keys_a_d(t_game *g)
+void	check_keys_l_r(t_game *g)
 {
 	double	rot_speed;
 	double	old_dir_x;
 	double	old_plane_x;
 
 	rot_speed = g->mlx->delta_time * 2.0;
-	if (mlx_is_key_down(g->mlx, MLX_KEY_D) || \
+	if (mlx_is_key_down(g->mlx, MLX_KEY_RIGHT) || \
 	g->data.mouse_x > (3 * SCREEN_W / 4))
 	{
 		old_dir_x = g->data.dir_x;
@@ -98,5 +116,5 @@ void	check_keys_a_d(t_game *g)
 		g->data.plane_y = old_plane_x * sin(-rot_speed) + \
 		g->data.plane_y * cos(-rot_speed);
 	}
-	check_key_d(g);
+	check_key_r(g);
 }
