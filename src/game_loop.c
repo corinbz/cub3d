@@ -6,7 +6,7 @@
 /*   By: erybolov <erybolov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 09:24:17 by erybolov          #+#    #+#             */
-/*   Updated: 2025/02/21 21:49:57 by erybolov         ###   ########.fr       */
+/*   Updated: 2025/02/21 22:09:40 by erybolov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ void	game_loop(void *param)
 
 	game = (t_game *)param;
 	check_keys_w_s(game);
+	check_keys_a_d(game);
 	check_keys_l_r(game);
 	draw_ceiling(game);
 	draw_floor(game);

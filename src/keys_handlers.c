@@ -6,7 +6,7 @@
 /*   By: erybolov <erybolov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 09:10:28 by erybolov          #+#    #+#             */
-/*   Updated: 2025/02/21 22:04:24 by erybolov         ###   ########.fr       */
+/*   Updated: 2025/02/21 22:11:34 by erybolov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,29 @@ void	key_callback(mlx_key_data_t keydata, void *param)
 		mlx_close_window(game->mlx);
 }
 
-void	mouse_handler(double xpos, double ypos, void *param)
+void	check_keys_a_d(t_game *g)
 {
-	t_game	*game;
+	double	move_speed;
 
-	game = (t_game *)param;
-	game->data.mouse_x = xpos;
-	game->data.mouse_y = ypos;
+	move_speed = g->mlx->delta_time * 5.0;
+	if (mlx_is_key_down(g->mlx, MLX_KEY_A))
+	{
+		if (g->map->cell_value[(int)g->data.pos_y] \
+		[(int)(g->data.pos_x - g->data.plane_x * move_speed)] == '0')
+			g->data.pos_x -= g->data.plane_x * move_speed;
+		if (g->map->cell_value[(int)(g->data.pos_y - g->data.plane_y * \
+		move_speed)][(int)g->data.pos_x] == '0')
+			g->data.pos_y -= g->data.plane_y * move_speed;
+	}
+	if (mlx_is_key_down(g->mlx, MLX_KEY_D))
+	{
+		if (g->map->cell_value[(int)g->data.pos_y] \
+		[(int)(g->data.pos_x + g->data.plane_x * move_speed)] == '0')
+			g->data.pos_x += g->data.plane_x * move_speed;
+		if (g->map->cell_value[(int)(g->data.pos_y + g->data.plane_y * \
+		move_speed)][(int)g->data.pos_x] == '0')
+			g->data.pos_y += g->data.plane_y * move_speed;
+	}
 }
 
 void	check_keys_w_s(t_game *g)
@@ -52,24 +68,6 @@ void	check_keys_w_s(t_game *g)
 		if (g->map->cell_value[(int)(g->data.pos_y - g->data.dir_y * \
 		move_speed)][(int)g->data.pos_x] == '0')
 			g->data.pos_y -= g->data.dir_y * move_speed;
-	}
-	if (mlx_is_key_down(g->mlx, MLX_KEY_A))
-	{
-		if (g->map->cell_value[(int)g->data.pos_y] \
-		[(int)(g->data.pos_x - g->data.plane_x * move_speed)] == '0')
-			g->data.pos_x -= g->data.plane_x * move_speed;
-		if (g->map->cell_value[(int)(g->data.pos_y - g->data.plane_y * \
-		move_speed)][(int)g->data.pos_x] == '0')
-			g->data.pos_y -= g->data.plane_y * move_speed;
-	}
-	if (mlx_is_key_down(g->mlx, MLX_KEY_D))
-	{
-		if (g->map->cell_value[(int)g->data.pos_y] \
-		[(int)(g->data.pos_x + g->data.plane_x * move_speed)] == '0')
-			g->data.pos_x += g->data.plane_x * move_speed;
-		if (g->map->cell_value[(int)(g->data.pos_y + g->data.plane_y * \
-		move_speed)][(int)g->data.pos_x] == '0')
-			g->data.pos_y += g->data.plane_y * move_speed;
 	}
 }
 
