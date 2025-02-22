@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycast.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erybolov <erybolov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ccraciun <ccraciun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 12:18:19 by erybolov          #+#    #+#             */
-/*   Updated: 2025/02/18 12:56:41 by erybolov         ###   ########.fr       */
+/*   Updated: 2025/02/22 10:34:54 by ccraciun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,16 +91,16 @@ static void	raycast_04(t_game *game)
 	if (game->data.side == 1)
 	{
 		if (game->data.ray_dir_y > 0)
-			game->data.wall_img = game->textures.wall_n_img;
-		else
 			game->data.wall_img = game->textures.wall_s_img;
+		else
+			game->data.wall_img = game->textures.wall_n_img;
 	}
 	else
 	{
 		if (game->data.ray_dir_x > 0)
-			game->data.wall_img = game->textures.wall_w_img;
-		else
 			game->data.wall_img = game->textures.wall_e_img;
+		else
+			game->data.wall_img = game->textures.wall_w_img;
 	}
 }
 

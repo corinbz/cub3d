@@ -6,7 +6,7 @@
 /*   By: ccraciun <ccraciun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 12:01:50 by ccraciun          #+#    #+#             */
-/*   Updated: 2025/02/18 12:40:08 by ccraciun         ###   ########.fr       */
+/*   Updated: 2025/02/22 10:35:02 by ccraciun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,22 +19,22 @@ static void	set_player_direction(t_game *game)
 	direction = game->map->cell_value
 	[(int)game->data.pos_y]
 	[(int)game->data.pos_x];
-	if (direction == 'W')
+	if (direction == 'E')
 	{
 		game->data.dir_x = 1;
 		game->data.plane_y = -0.66;
 	}
-	else if (direction == 'E')
+	else if (direction == 'W')
 	{
 		game->data.dir_x = -1;
 		game->data.plane_y = 0.66;
 	}
-	else if (direction == 'S')
+	else if (direction == 'N')
 	{
 		game->data.dir_y = -1;
 		game->data.plane_x = -0.66;
 	}
-	else if (direction == 'N')
+	else if (direction == 'S')
 	{
 		game->data.dir_y = 1;
 		game->data.plane_x = 0.66;
